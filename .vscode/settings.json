@@ -1,3 +1,4 @@
 {
-    "dart.flutterSdkPath": "/home/nicolas/snap/flutter/common/flutter"
+    "dart.flutterSdkPath": "/home/nicolas/snap/flutter/common/flutter",
+    "editor.formatOnSave": true
 }
