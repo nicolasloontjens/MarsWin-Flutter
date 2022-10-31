@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "routing/route_generator.dart";
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -82,6 +83,30 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   )),
               SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/login');
+                        },
+                        child: Text(
+                          "Log In!",
+                          style: TextStyle(
+                              color: Color(0xFFF26267),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ))
+                  ],
+                ),
+              )
             ]),
           ),
         )));

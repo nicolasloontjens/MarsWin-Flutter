@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "routing/route_generator.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -94,7 +95,9 @@ class _LoginPageState extends State<LoginPage> {
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                     ),
                     TextButton(
-                        onPressed: () => {debugPrint('test')},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/register');
+                        },
                         child: Text(
                           "Register Now!",
                           style: TextStyle(
