@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "routing/route_generator.dart";
+import "../routing/route_generator.dart";
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

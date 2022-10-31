@@ -1,15 +1,24 @@
 import "package:flutter/material.dart";
-import 'package:marswin/login.dart';
-import 'package:marswin/register.dart';
+import '../pages/login.dart';
+import '../pages/register.dart';
+import '../pages/home.dart';
+import 'package:get_storage/get_storage.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case '/login':
+        var loggedIn = GetStorage().read("loggedIn");
+        /*if (loggedIn == null) {
+          debugPrint("its null");
+          return MaterialPageRoute(builder: (_) => HomePage());
+        }*/
         return MaterialPageRoute(builder: (_) => LoginPage());
       case '/register':
         return MaterialPageRoute(builder: (_) => RegisterPage());
+      case '/home':
+        return MaterialPageRoute(builder: (_) => HomePage());
       default:
         return _errorRoute();
     }
@@ -28,7 +37,9 @@ Route<dynamic> _errorRoute() {
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Padding(
                   padding: const EdgeInsets.all(50.0),
-                  child: Image.asset('assets/images/mando-error.jpg'),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.asset('assets/images/mando-error.png')),
                 ),
                 Text("This is not the way",
                     style: TextStyle(
@@ -36,12 +47,12 @@ Route<dynamic> _errorRoute() {
                         fontFamily: "Inter",
                         fontSize: 32,
                         fontWeight: FontWeight.w700)),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 75.0),
                     child: GestureDetector(
                       onTap: () {
-                        debugPrint("test submit");
+                        debugPrint("test go back to login?");
                       },
                       child: Container(
                         height: 40,
