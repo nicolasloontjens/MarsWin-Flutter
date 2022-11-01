@@ -9,24 +9,34 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/login':
-        var loggedIn = GetStorage().read("loggedIn");
-        /*if (loggedIn == null) {
-          debugPrint("its null");
-          return MaterialPageRoute(builder: (_) => HomePage());
-        }*/
         return MaterialPageRoute(builder: (_) => LoginPage());
       case '/register':
         return MaterialPageRoute(builder: (_) => RegisterPage());
       case '/home':
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return protectRoute(MaterialPageRoute(builder: (_) => HomePage()));
       default:
-        return _errorRoute();
+        return MaterialPageRoute(builder: (_) => ErrorPage());
     }
+  }
+
+  static Route<dynamic> protectRoute(Route<dynamic> widget) {
+    if (GetStorage().read("loggedin") == 1) {
+      return widget;
+    }
+    return MaterialPageRoute(builder: (_) => ErrorPage());
   }
 }
 
-Route<dynamic> _errorRoute() {
-  return MaterialPageRoute(builder: (_) {
+class ErrorPage extends StatefulWidget {
+  const ErrorPage({Key? key}) : super(key: key);
+
+  @override
+  State<ErrorPage> createState() => _ErrorPageState();
+}
+
+class _ErrorPageState extends State<ErrorPage> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFFF1EBE6),
         body: SafeArea(
@@ -52,7 +62,7 @@ Route<dynamic> _errorRoute() {
                     padding: const EdgeInsets.symmetric(horizontal: 75.0),
                     child: GestureDetector(
                       onTap: () {
-                        debugPrint("test go back to login?");
+                        Navigator.of(context).pushNamed('/login');
                       },
                       child: Container(
                         height: 40,
@@ -75,5 +85,5 @@ Route<dynamic> _errorRoute() {
             ),
           ),
         ));
-  });
+  }
 }
