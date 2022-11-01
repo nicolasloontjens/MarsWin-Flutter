@@ -20,6 +20,7 @@ class RouteGenerator {
   }
 
   static Route<dynamic> protectRoute(Route<dynamic> widget) {
+    return widget;
     if (GetStorage().read("loggedin") == 1) {
       return widget;
     }

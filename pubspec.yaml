@@ -65,6 +65,7 @@ flutter:
   assets:
      - assets/images/onboarding-logo.png
      - assets/images/mando-error.png
+     - assets/images/home-icon.png
 
   fonts:
     - family: Inter
