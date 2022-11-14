@@ -13,14 +13,13 @@ class RouteGenerator {
       case '/register':
         return MaterialPageRoute(builder: (_) => RegisterPage());
       case '/home':
-        return protectRoute(MaterialPageRoute(builder: (_) => HomePage()));
+        return MaterialPageRoute(builder: (_) => HomePage());
       default:
         return MaterialPageRoute(builder: (_) => ErrorPage());
     }
   }
 
   static Route<dynamic> protectRoute(Route<dynamic> widget) {
-    return widget;
     if (GetStorage().read("loggedin") == 1) {
       return widget;
     }

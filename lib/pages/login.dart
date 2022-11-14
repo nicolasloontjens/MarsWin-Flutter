@@ -9,6 +9,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void login() {
+    debugPrint(_usernameController.text);
+    debugPrint(_passwordController.text);
+    Navigator.of(context).pushNamed('/home');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: TextField(
+                    controller: _usernameController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide:
@@ -45,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: TextField(
+                    controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -63,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 75.0),
                   child: GestureDetector(
                     onTap: () {
-                      debugPrint("test submit");
+                      login();
                     },
                     child: Container(
                       height: 40,
