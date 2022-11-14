@@ -35,17 +35,25 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex = index;
             });
           },
+          elevation: 10,
+          iconSize: 25,
+          selectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w500, fontFamily: 'Inter', fontSize: 18),
+          unselectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w500, fontFamily: 'Inter', fontSize: 18),
           unselectedItemColor: Colors.black,
           selectedItemColor: Color(0xFFF1EBE6),
           backgroundColor: Color(0xFFE87470),
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: (Icon(CarbonIcons.home)), label: "Home"),
+              icon: (Icon(CarbonIcons.home)),
+              label: "Home",
+            ),
             BottomNavigationBarItem(
                 icon: (Icon(CarbonIcons.trophy_filled)), label: "Standings"),
             BottomNavigationBarItem(
-                icon: (Icon(CarbonIcons.wallet)), label: "Wallet"),
+                icon: (Icon(CarbonIcons.currency)), label: "Wallet"),
             BottomNavigationBarItem(
                 icon: (Icon(CarbonIcons.user)), label: "Profile"),
           ]),
