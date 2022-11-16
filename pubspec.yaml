@@ -68,6 +68,7 @@ flutter:
      - assets/images/onboarding-logo.png
      - assets/images/mando-error.png
      - assets/images/home-icon.png
+     - assets/images/marswin-no-text.png
 
   fonts:
     - family: Inter

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:carbon_icons/carbon_icons.dart';
+import '../pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> {
         labelText: 'Search',
       ),
     ),
-    Icon(CarbonIcons.user)
+    ProfilePage()
   ];
 
   @override
