@@ -7,23 +7,33 @@ import 'package:get_storage/get_storage.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    switch (settings.name) {
+    final page = getWidget(settings.name);
+    return PageRouteBuilder(
+        settings: settings,
+        pageBuilder: (_, __, ___) => page,
+        transitionsBuilder: (_, a, __, c) =>
+            FadeTransition(opacity: a, child: c));
+  }
+
+  static Widget getWidget(String? name) {
+    switch (name) {
       case '/login':
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return LoginPage();
       case '/register':
-        return MaterialPageRoute(builder: (_) => RegisterPage());
+        return RegisterPage();
       case '/home':
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return HomePage();
       default:
-        return MaterialPageRoute(builder: (_) => ErrorPage());
+        return ErrorPage();
     }
   }
 
-  static Route<dynamic> protectRoute(Route<dynamic> widget) {
+  //function that protects the widget from being accessed without logging in
+  static Widget protectWidget(Widget widget) {
     if (GetStorage().read("loggedin") == 1) {
       return widget;
     }
-    return MaterialPageRoute(builder: (_) => ErrorPage());
+    return ErrorPage();
   }
 }
 
