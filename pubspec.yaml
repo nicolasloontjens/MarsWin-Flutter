@@ -74,6 +74,9 @@ flutter:
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter/Inter-Regular.ttf
+    - family: Nasalization
+      fonts:
+        - asset: assets/fonts/Nasalization/nasalization.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

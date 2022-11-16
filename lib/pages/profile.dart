@@ -34,9 +34,15 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 75, width: 75),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: 20),
+                          margin: EdgeInsets.only(left: 40),
                           child: Column(
-                            children: [Text('user')],
+                            children: [
+                              Text('John Doe',
+                                  style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Nasalization'))
+                            ],
                           ))
                     ],
                   )
