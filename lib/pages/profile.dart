@@ -11,12 +11,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  launchSupportPage() async {
-    final Uri _supportUrl =
-        Uri(host: "https://www.gamblingtherapy.org", path: "/");
-    if (await canLaunchUrl(_supportUrl)) {
-      await launchUrl(_supportUrl);
-    } else {
+  Future<void> _launchSupportPage() async {
+    final Uri _supportUrl = Uri.parse("https://www.gamblingtherapy.org/");
+    if (!await launchUrl(_supportUrl)) {
       throw 'Could not launch $_supportUrl';
     }
   }
@@ -134,11 +131,9 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Spacer(),
               Container(
-                padding: EdgeInsets.only(bottom: 40),
+                padding: EdgeInsets.only(bottom: 50),
                 child: GestureDetector(
-                  onTap: () async {
-                    await launchSupportPage();
-                  },
+                  onTap: _launchSupportPage,
                   child: Container(
                     height: 40,
                     width: MediaQuery.of(context).size.width * 0.40,
