@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "../routing/route_generator.dart";
+import "../data/user.dart";
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -11,12 +12,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  void register() {
-    debugPrint(_usernameController.text);
-    debugPrint(_passwordController.text);
-    Navigator.of(context).pushNamed('/home');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +69,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 75.0),
                   child: GestureDetector(
                     onTap: () {
-                      register();
+                      registerUser(context, _usernameController.text,
+                          _passwordController.text);
                     },
                     child: Container(
                       height: 40,

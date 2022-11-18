@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "../routing/route_generator.dart";
+import '../data/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,12 +12,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  void login() {
-    debugPrint(_usernameController.text);
-    debugPrint(_passwordController.text);
-    Navigator.of(context).pushNamed('/home');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +69,8 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 75.0),
                   child: GestureDetector(
                     onTap: () {
-                      login();
+                      loginUser(context, _usernameController.text,
+                          _passwordController.text);
                     },
                     child: Container(
                       height: 40,
