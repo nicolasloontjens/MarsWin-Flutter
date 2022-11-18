@@ -2,6 +2,7 @@ import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
 import "../routing/route_generator.dart";
 import 'package:url_launcher/url_launcher.dart';
+import '../data/user.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -84,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   )),
               Container(
-                padding: EdgeInsets.only(top: 50),
+                padding: EdgeInsets.only(top: 60),
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(
@@ -120,6 +121,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Center(
                         child: Text(
                       'Change password',
+                      style: TextStyle(
+                          fontFamily: "Inter",
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontSize: 16),
+                    )),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 25),
+                child: GestureDetector(
+                  onTap: () {
+                    logoutUser(context);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width * 0.40,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFE87470),
+                        border: Border.all(color: Colors.black, width: 2.0),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Center(
+                        child: Text(
+                      'Log out',
                       style: TextStyle(
                           fontFamily: "Inter",
                           fontWeight: FontWeight.w500,
