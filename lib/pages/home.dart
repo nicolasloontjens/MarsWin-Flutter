@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:carbon_icons/carbon_icons.dart';
 import '../pages/profile.dart';
+import '../pages/standings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> widgets = [
     Icon(CarbonIcons.home),
+    StandingsPage(),
     Icon(CarbonIcons.trophy_filled),
     TextField(
       decoration: InputDecoration(

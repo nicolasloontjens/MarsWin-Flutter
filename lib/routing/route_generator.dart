@@ -23,7 +23,7 @@ class RouteGenerator {
       case '/register':
         return RegisterPage();
       case '/home':
-        return protectWidget(HomePage());
+        return HomePage();
       default:
         return ErrorPage();
     }
