@@ -15,8 +15,7 @@ class _StandingsPageState extends State<StandingsPage> {
         child: Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text("2052 Formula Mars
-               Championship",
+              Text("2052 Formula Mars\nChampionship",
                   style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w500,
