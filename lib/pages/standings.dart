@@ -14,6 +14,7 @@ class _StandingsPageState extends State<StandingsPage> {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(height: 25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text("2052 Formula Mars\nChampionship",
                   style: TextStyle(
@@ -21,6 +22,11 @@ class _StandingsPageState extends State<StandingsPage> {
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Inter')),
             ]),
+            Container(
+              margin: EdgeInsets.all(50),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1)),
+            )
           ],
         ),
       ),
