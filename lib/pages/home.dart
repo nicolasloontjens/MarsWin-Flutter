@@ -29,7 +29,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: IndexedStack(index: _selectedIndex, children: widgets),
+        child: Container(
+            decoration: BoxDecoration(color: Color(0xFFF1EBE6)),
+            child: IndexedStack(index: _selectedIndex, children: widgets)),
       ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
