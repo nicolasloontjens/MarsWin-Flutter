@@ -11,11 +11,7 @@ class Datafetcher {
     try {
       final response = await http.get(
           Uri.parse("https://goapi-aicomyllevillestudent.koyeb.app/races"),
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Accept": "*/*"
-          });
+          headers: {"Content-Type": "application/json", "Accept": "*/*"});
       if (response.statusCode == 200) {
         List list = json.decode(response.body);
         List<Race> races = list.map((model) => Race.fromJson(model)).toList();

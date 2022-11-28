@@ -25,7 +25,13 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
         decoration: BoxDecoration(color: Color(0xFFF1EBE6)),
         child: Column(
           children: [
-            Text("Hi!"),
+            SizedBox(height: 30),
+            Text("Race schedule",
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Nasalization")),
+            SizedBox(height: 30),
             FutureBuilder<List<Race>>(
                 future: races,
                 builder: ((context, snapshot) {
@@ -44,8 +50,20 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                 border:
                                     Border.all(color: Colors.black, width: 2)),
                             child: ListTile(
-                                title: Text(snapshot.data![index].name),
-                                subtitle: Text(snapshot.data![index].date),
+                                title: Text(
+                                  snapshot.data![index].name,
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Inter'),
+                                ),
+                                subtitle: Text(snapshot.data![index].date,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Inter',
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w400)),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(0.5)),
                                 contentPadding: EdgeInsets.all(0.5),
