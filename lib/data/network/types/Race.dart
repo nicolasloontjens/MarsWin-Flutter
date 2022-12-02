@@ -16,7 +16,7 @@ class Race {
   factory Race.fromJson(Map<String, dynamic> json) {
     return Race(
       id: json['id'],
-      championship_id: json['championship_id'],
+      championship_id: json['championshipId'],
       name: json['name'],
       date: json['date'],
       finished: json['finished'],
