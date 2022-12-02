@@ -10,8 +10,13 @@ class Datafetcher {
   static Future<List<Race>> getRaces() async {
     try {
       final response = await http.get(
-          Uri.parse("https://goapi-aicomyllevillestudent.koyeb.app/races"),
-          headers: {"Content-Type": "application/json", "Accept": "*/*"});
+          Uri.parse("https://goapi-aicomyllevillestudent.koyeb.app/api/races"),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+            "Authorization":
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJ1c2VyX2lkIjoyfQ.qIgRASSAdFCWz2dPCgh1MOwlIeabuJWg68MuyIhsClQ"
+          });
       if (response.statusCode == 200) {
         List list = json.decode(response.body);
         List<Race> races = list.map((model) => Race.fromJson(model)).toList();
