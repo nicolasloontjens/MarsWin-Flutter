@@ -1,9 +1,9 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:marswin/data/network/datafetcher.dart';
-import 'package:marswin/pages/walletEditor.dart';
 
 class WalletOverview extends StatefulWidget {
   const WalletOverview({Key? key}) : super(key: key);
@@ -15,6 +15,7 @@ class WalletOverview extends StatefulWidget {
 class _WalletOverviewState extends State<WalletOverview> {
   late Future<int> balance;
   int showOverview = 0;
+  TextEditingController _amountController = TextEditingController();
 
   @override
   void initState() {
@@ -136,9 +137,70 @@ class _WalletOverviewState extends State<WalletOverview> {
                               Container(
                                   child: Column(
                                 children: [
-                                  Text("Add amount:"),
+                                  Text(
+                                    "Add amount:",
+                                    style: TextStyle(
+                                        fontFamily: "Inter",
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontSize: 16),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.40,
+                                    child: TextFormField(
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Please enter a valid amount";
+                                        }
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      controller: _amountController,
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black,
+                                                width: 5.0),
+                                          ),
+                                          hintText: 'Amount'),
+                                    ),
+                                  ),
                                   Container(
                                     padding: EdgeInsets.only(top: 25),
+                                    child: GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.40,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFE87470),
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Center(
+                                            child: Text(
+                                          'Add',
+                                          style: TextStyle(
+                                              fontFamily: "Inter",
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 20),
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
@@ -151,7 +213,7 @@ class _WalletOverviewState extends State<WalletOverview> {
                                             MediaQuery.of(context).size.width *
                                                 0.40,
                                         decoration: BoxDecoration(
-                                            color: Color(0xFFE87470),
+                                            color: Colors.grey,
                                             border: Border.all(
                                                 color: Colors.black,
                                                 width: 2.0),
@@ -175,9 +237,73 @@ class _WalletOverviewState extends State<WalletOverview> {
                               Container(
                                   child: Column(
                                 children: [
-                                  Text("Withdrawal amount:"),
+                                  Text(
+                                    "Withdrawal amount:",
+                                    style: TextStyle(
+                                        fontFamily: "Inter",
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontSize: 16),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.40,
+                                    child: TextFormField(
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Please enter a valid amount";
+                                        } else if (int.parse(value) >
+                                            snapshot.data!) {
+                                          return "You don't have enough funds";
+                                        }
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      controller: _amountController,
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black,
+                                                width: 5.0),
+                                          ),
+                                          hintText: 'Amount'),
+                                    ),
+                                  ),
                                   Container(
                                     padding: EdgeInsets.only(top: 25),
+                                    child: GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.40,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFE87470),
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Center(
+                                            child: Text(
+                                          'Withdraw',
+                                          style: TextStyle(
+                                              fontFamily: "Inter",
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 20),
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
@@ -190,7 +316,7 @@ class _WalletOverviewState extends State<WalletOverview> {
                                             MediaQuery.of(context).size.width *
                                                 0.40,
                                         decoration: BoxDecoration(
-                                            color: Color(0xFFE87470),
+                                            color: Colors.grey,
                                             border: Border.all(
                                                 color: Colors.black,
                                                 width: 2.0),
