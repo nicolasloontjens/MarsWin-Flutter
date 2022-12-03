@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:marswin/data/network/types/Championship.dart';
 import 'package:marswin/data/network/types/Race.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,7 +30,7 @@ class Datafetcher {
               id: 1,
               championship_id: 1,
               finished: false,
-              date: "2052-01-01")
+              date: "2052-03-12 00:00:00+00")
         ];
         return races;
         //throw Exception("Failed to load races");
