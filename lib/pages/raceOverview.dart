@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:marswin/data/network/datafetcher.dart';
 import 'package:marswin/data/network/types/Race.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class RaceOverviewPage extends StatefulWidget {
   const RaceOverviewPage({Key? key}) : super(key: key);
@@ -80,7 +81,12 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                           );
                         }));
                   } else {
-                    return CircularProgressIndicator();
+                    return Center(
+                        child: SpinKitWave(
+                      color: Colors.black,
+                      size: 40,
+                      itemCount: 6,
+                    ));
                   }
                 }))
           ],
