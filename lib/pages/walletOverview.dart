@@ -1,7 +1,9 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:marswin/data/network/datafetcher.dart';
+import 'package:marswin/pages/walletEditor.dart';
 
 class WalletOverview extends StatefulWidget {
   const WalletOverview({Key? key}) : super(key: key);
@@ -12,10 +14,12 @@ class WalletOverview extends StatefulWidget {
 
 class _WalletOverviewState extends State<WalletOverview> {
   late Future<int> balance;
+  int showOverview = 0;
 
   @override
   void initState() {
     super.initState();
+    GetStorage().write("walletOperationType", 0);
     balance = Datafetcher.getBalance();
   }
 
@@ -53,53 +57,161 @@ class _WalletOverviewState extends State<WalletOverview> {
                           ],
                         ),
                         SizedBox(height: 20),
-                        Container(
-                          padding: EdgeInsets.only(top: 25),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width * 0.40,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFE87470),
-                                  border: Border.all(
-                                      color: Colors.black, width: 2.0),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Center(
-                                  child: Text(
-                                'Add funds',
-                                style: TextStyle(
-                                    fontFamily: "Inter",
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    fontSize: 16),
-                              )),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 25),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width * 0.40,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFE87470),
-                                  border: Border.all(
-                                      color: Colors.black, width: 2.0),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Center(
-                                  child: Text(
-                                'Withdraw funds',
-                                style: TextStyle(
-                                    fontFamily: "Inter",
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    fontSize: 16),
-                              )),
-                            ),
-                          ),
+                        Column(
+                          children: [
+                            if (showOverview == 0) ...[
+                              Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(top: 25),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            showOverview = 1;
+                                          });
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.40,
+                                          decoration: BoxDecoration(
+                                              color: Color(0xFFE87470),
+                                              border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Center(
+                                              child: Text(
+                                            'Add funds',
+                                            style: TextStyle(
+                                                fontFamily: "Inter",
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(top: 25),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            showOverview = 2;
+                                          });
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.40,
+                                          decoration: BoxDecoration(
+                                              color: Color(0xFFE87470),
+                                              border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Center(
+                                              child: Text(
+                                            'Withdraw funds',
+                                            style: TextStyle(
+                                                fontFamily: "Inter",
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ] else if (showOverview == 1) ...[
+                              Container(
+                                  child: Column(
+                                children: [
+                                  Text("Add amount:"),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 25),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          showOverview = 0;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.40,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFE87470),
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Center(
+                                            child: Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                              fontFamily: "Inter",
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                            ] else if (showOverview == 2) ...[
+                              Container(
+                                  child: Column(
+                                children: [
+                                  Text("Withdrawal amount:"),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 25),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          showOverview = 0;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.40,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFE87470),
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Center(
+                                            child: Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                              fontFamily: "Inter",
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                            ]
+                          ],
                         ),
                       ]);
                     }
