@@ -3,6 +3,7 @@ import 'package:carbon_icons/carbon_icons.dart';
 import '../pages/profile.dart';
 import '../pages/standings.dart';
 import '../pages/raceOverview.dart';
+import '../pages/walletOverview.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,12 +17,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> widgets = [
     RaceOverviewPage(),
     StandingsPage(),
-    TextField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'Search',
-      ),
-    ),
+    WalletOverview(),
     ProfilePage()
   ];
 
