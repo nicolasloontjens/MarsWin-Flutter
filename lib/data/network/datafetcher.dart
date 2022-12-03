@@ -39,4 +39,27 @@ class Datafetcher {
       throw Exception("failed");
     }
   }
+
+  static Future<int> getBalance() async {
+    try {
+      //final response = await http.get(
+      //    Uri.parse(
+      //        "https://goapi-aicomyllevillestudent.koyeb.app/api/balance/"),
+      //    headers: {
+      //      "Content-Type": "application/json",
+      //      "Accept": "*/*",
+      //      "Authorization": ""
+      //    });
+      //if (response.statusCode == 200) {
+      //  return 1000;
+      //} else {
+      //  return 1000;
+      //}
+      await Future.delayed(Duration(seconds: 1));
+      return 420;
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
+    }
+  }
 }
