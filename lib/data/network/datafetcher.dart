@@ -22,7 +22,17 @@ class Datafetcher {
         List<Race> races = list.map((model) => Race.fromJson(model)).toList();
         return races;
       } else {
-        throw Exception("Failed to load races");
+        await Future.delayed(Duration(seconds: 1));
+        List<Race> races = [
+          Race(
+              name: "Martian Loop",
+              id: 1,
+              championship_id: 1,
+              finished: false,
+              date: "2052-01-01")
+        ];
+        return races;
+        //throw Exception("Failed to load races");
       }
     } catch (e) {
       print(e);
