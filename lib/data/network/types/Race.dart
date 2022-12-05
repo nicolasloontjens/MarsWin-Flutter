@@ -18,15 +18,19 @@ class Race {
   });
 
   factory Race.fromJson(Map<String, dynamic> json) {
+    List<RaceDriver> drivers = [
+      RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
+    ];
     return Race(
       id: json['id'],
       championship_id: json['championshipId'],
       name: json['name'],
-      drivers: List.from(json['drivers'])
-          .map((model) => RaceDriver.fromJson(Map.from(model)))
-          .toList(),
+      drivers: drivers,
       date: json['date'],
       finished: json['finished'],
     );
+    //List.from(json['drivers'])
+    //      .map((model) => RaceDriver.fromJson(Map.from(model)))
+    //      .toList(),
   }
 }
