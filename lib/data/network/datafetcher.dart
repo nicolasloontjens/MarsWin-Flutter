@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:marswin/data/network/types/Championship.dart';
 import 'package:marswin/data/network/types/Race.dart';
 import 'package:http/http.dart' as http;
+import 'package:marswin/data/network/types/RaceDriver.dart';
 
 class Datafetcher {
   static String url = "https://goapi-aicomyllevillestudent.koyeb.app";
@@ -24,11 +25,15 @@ class Datafetcher {
         return races;
       } else {
         await Future.delayed(Duration(seconds: 1));
+        List<RaceDriver> drivers = [
+          RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
+        ];
         List<Race> races = [
           Race(
               name: "Martian Loop",
               id: 1,
               championship_id: 1,
+              drivers: drivers,
               finished: false,
               date: "2052-03-12 00:00:00+00")
         ];
