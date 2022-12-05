@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:marswin/data/network/datafetcher.dart';
+import 'package:marswin/data/network/types/AuthResponse.dart';
 import "../routing/route_generator.dart";
-import '../data/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,6 +14,26 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future _loginUser(BuildContext context) async {
+    AuthResponse response = await Datafetcher.login(
+        _usernameController.text, _passwordController.text);
+    if (response.success) {
+      Navigator.of(context).pushNamed("/home");
+    } else {
+      showToast(
+        response.error,
+        context: context,
+        position: StyledToastPosition.top,
+        animation: StyledToastAnimation.slideFromTopFade,
+        reverseAnimation: StyledToastAnimation.fade,
+        alignment: Alignment.bottomCenter,
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 3),
+      );
+      _passwordController.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +90,8 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 75.0),
                   child: GestureDetector(
-                    onTap: () {
-                      loginUser(context, _usernameController.text,
-                          _passwordController.text);
+                    onTap: () async {
+                      await _loginUser(context);
                     },
                     child: Container(
                       height: 40,
