@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
-import "../routing/route_generator.dart";
-import "../data/user.dart";
+import 'package:marswin/data/network/types/AuthResponse.dart';
+import "../data/network/datafetcher.dart";
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -12,6 +13,43 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  _checkIfSignedIn() async {
+    var isLoggedIn = Datafetcher.isLoggedIn();
+    if (await isLoggedIn) {
+      print("is logged in");
+      Navigator.of(context).pushNamed('/home');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkIfSignedIn();
+    });
+  }
+
+  Future _registerUser(BuildContext context) async {
+    AuthResponse response = await Datafetcher.register(
+        _usernameController.text, _passwordController.text);
+    if (response.success) {
+      Navigator.of(context).pushNamed('/home');
+    } else {
+      showToast(
+        response.error,
+        context: context,
+        position: StyledToastPosition.top,
+        animation: StyledToastAnimation.slideFromTopFade,
+        reverseAnimation: StyledToastAnimation.fade,
+        alignment: Alignment.bottomCenter,
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 3),
+      );
+      _passwordController.clear();
+      _usernameController.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +106,8 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 75.0),
                   child: GestureDetector(
-                    onTap: () {
-                      registerUser(context, _usernameController.text,
-                          _passwordController.text);
+                    onTap: () async {
+                      await _registerUser(context);
                     },
                     child: Container(
                       height: 40,
