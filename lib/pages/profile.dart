@@ -1,8 +1,8 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 import "../routing/route_generator.dart";
 import 'package:url_launcher/url_launcher.dart';
-import '../data/user.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -17,6 +17,12 @@ class _ProfilePageState extends State<ProfilePage> {
     if (!await launchUrl(_supportUrl)) {
       throw 'Could not launch $_supportUrl';
     }
+  }
+
+  Future _logoutUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('isLoggedIn', 0);
+    Navigator.of(context).pushNamed('/register');
   }
 
   @override
@@ -133,8 +139,8 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 25),
                 child: GestureDetector(
-                  onTap: () {
-                    logoutUser(context);
+                  onTap: () async {
+                    _logoutUser();
                   },
                   child: Container(
                     height: 40,
