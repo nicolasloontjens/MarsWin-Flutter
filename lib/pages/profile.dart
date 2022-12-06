@@ -1,5 +1,7 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:marswin/data/network/datafetcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "../routing/route_generator.dart";
 import 'package:url_launcher/url_launcher.dart';
@@ -12,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late Future<String> _username;
   Future<void> _launchSupportPage() async {
     final Uri _supportUrl = Uri.parse("https://www.gamblingtherapy.org/");
     if (!await launchUrl(_supportUrl)) {
@@ -26,6 +29,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _username = Datafetcher.getUsername();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFFF1EBE6),
@@ -33,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               Container(
-                  height: 150,
+                  height: 120,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 1),
@@ -51,26 +60,29 @@ class _ProfilePageState extends State<ProfilePage> {
                             Container(
                               child: Image.asset(
                                   'assets/images/marswin-no-text.png',
-                                  height: 100,
-                                  width: 100),
+                                  height: 75,
+                                  width: 75),
                             ),
-                            SizedBox(width: 20),
+                            SizedBox(width: 10),
                             Container(
                                 margin: EdgeInsets.only(left: 20),
                                 child: Column(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text('John Doe',
-                                            style: TextStyle(
-                                                fontSize: 32,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: 'Nasalization')),
-                                        IconButton(
-                                            onPressed: () => {},
-                                            icon: Icon(CarbonIcons.edit))
-                                      ],
-                                    ),
+                                    FutureBuilder<String>(
+                                        future: _username,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Text(snapshot.data!,
+                                                style: TextStyle(
+                                                    fontSize: 32,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily:
+                                                        'Nasalization'));
+                                          } else if (snapshot.hasError) {
+                                            return Text('${snapshot.error}');
+                                          }
+                                          return SpinKitFadingCircle();
+                                        }),
                                     SizedBox(height: 5),
                                     Row(
                                       children: [

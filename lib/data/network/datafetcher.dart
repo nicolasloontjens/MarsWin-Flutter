@@ -136,4 +136,32 @@ class Datafetcher {
     return AuthResponse(
         success: false, error: "Something went wrong logging in");
   }
+
+  static Future<String> getUsername() async {
+    try {
+      final response = await http.get(Uri.parse("$url/user/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Authorization": "Bearer " + await getToken()
+      });
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["username"];
+      }
+      return "";
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
+    }
+  }
+
+  static Future<String> getToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = await prefs.getString("token").toString();
+      return token;
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
+    }
+  }
 }
