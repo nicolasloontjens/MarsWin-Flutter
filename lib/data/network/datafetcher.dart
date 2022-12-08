@@ -129,7 +129,6 @@ class Datafetcher {
             "username": username,
             "password": password,
           }));
-
       if (response.statusCode == 200) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setInt("isLoggedIn", 1);
