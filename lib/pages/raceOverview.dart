@@ -11,12 +11,15 @@ class RaceOverviewPage extends StatefulWidget {
 }
 
 class _RaceOverviewPageState extends State<RaceOverviewPage> {
-  late Future<List<Race>> races;
+  late Future<List<Race>> finishedRaces;
+  late Future<List<Race>> plannedRaces;
+  final List<bool> isSelected = [true, false];
+  bool vertical = false;
 
   @override
   initState() {
     super.initState();
-    races = Datafetcher.getRaces();
+    plannedRaces = Datafetcher.getPlannedRaces();
   }
 
   @override
@@ -33,9 +36,48 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                     fontWeight: FontWeight.w500,
                     fontFamily: "Nasalization")),
             SizedBox(height: 30),
+            Container(
+                width: MediaQuery.of(context).size.width * 0.60,
+                child: Expanded(
+                  child: ToggleButtons(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    selectedBorderColor: Colors.red[700],
+                    selectedColor: Colors.white,
+                    fillColor: Colors.red[400],
+                    color: Colors.black,
+                    constraints: BoxConstraints(
+                        minWidth: MediaQuery.of(context).size.width * 0.29,
+                        minHeight: 50),
+                    direction: vertical ? Axis.vertical : Axis.horizontal,
+                    isSelected: isSelected,
+                    onPressed: ((index) {
+                      setState(() {
+                        for (int i = 0; i < isSelected.length; i++) {
+                          isSelected[i] = i == index;
+                        }
+                      });
+                    }),
+                    children: [
+                      Expanded(
+                          child: Text(
+                        'Finished',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Nasalization"),
+                      )),
+                      Expanded(
+                          child: Text('Planned',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "Nasalization")))
+                    ],
+                  ),
+                )),
             Expanded(
               child: FutureBuilder<List<Race>>(
-                  future: races,
+                  future: plannedRaces,
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       print(snapshot.data);
@@ -60,7 +102,8 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                         fontWeight: FontWeight.w500,
                                         fontFamily: 'Inter'),
                                   ),
-                                  subtitle: Text(snapshot.data![index].date,
+                                  subtitle: Text(
+                                      snapshot.data![index].date.toString(),
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontFamily: 'Inter',
