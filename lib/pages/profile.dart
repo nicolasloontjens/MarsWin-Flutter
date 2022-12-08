@@ -81,7 +81,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                           } else if (snapshot.hasError) {
                                             return Text('${snapshot.error}');
                                           }
-                                          return SpinKitFadingCircle();
+                                          return SpinKitFadingCircle(
+                                            color: Colors.black,
+                                          );
                                         }),
                                     SizedBox(height: 5),
                                     Row(
