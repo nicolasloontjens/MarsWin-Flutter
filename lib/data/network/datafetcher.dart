@@ -12,33 +12,43 @@ class Datafetcher {
 
   static Future<List<Race>> getRaces() async {
     try {
-      final response = await http.get(Uri.parse("$url/races/"), headers: {
-        "Content-Type": "application/json",
-        "Accept": "*/*",
-        "Authorization":
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJ1c2VyX2lkIjoyfQ.qIgRASSAdFCWz2dPCgh1MOwlIeabuJWg68MuyIhsClQ"
-      });
+      final response = await http.get(Uri.parse("$url/races/"),
+          headers: {"Content-Type": "application/json", "Accept": "*/*"});
       if (response.statusCode == 200) {
         List list = json.decode(response.body);
         List<Race> races = list.map((model) => Race.fromJson(model)).toList();
         return races;
       } else {
-        await Future.delayed(Duration(seconds: 1));
-        List<RaceDriver> drivers = [
-          RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
-        ];
-        List<Race> races = [
-          Race(
-              name: "Martian Loop",
-              id: 1,
-              championship_id: 1,
-              drivers: drivers,
-              finished: false,
-              date: "2052-03-12 00:00:00+00")
-        ];
-        return races;
-        //throw Exception("Failed to load races");
+        throw Exception("Failed to load races");
       }
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
+    }
+  }
+
+  static Future<List<Race>> getFinishedRaces() async {
+    try {
+      List<Race> races = await getRaces();
+      races.retainWhere((element) {
+        return element.date
+            .isBefore(DateTime(2052, DateTime.now().month, DateTime.now().day));
+      });
+      return races;
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
+    }
+  }
+
+  static Future<List<Race>> getPlannedRaces() async {
+    try {
+      List<Race> races = await getRaces();
+      races.retainWhere((element) {
+        return element.date
+            .isAfter(DateTime(2052, DateTime.now().month, DateTime.now().day));
+      });
+      return races;
     } catch (e) {
       print(e);
       throw Exception("failed");

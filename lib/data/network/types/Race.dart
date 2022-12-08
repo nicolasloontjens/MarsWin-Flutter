@@ -1,11 +1,12 @@
 import 'package:marswin/data/network/types/RaceDriver.dart';
+import 'package:intl/intl.dart';
 
 class Race {
   final int id;
   final int championship_id;
   final String name;
   final List<RaceDriver> drivers;
-  final String date;
+  final DateTime date;
   final bool finished;
 
   const Race({
@@ -26,7 +27,7 @@ class Race {
       championship_id: json['championshipId'],
       name: json['name'],
       drivers: drivers,
-      date: json['date'],
+      date: DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(json['date']),
       finished: json['finished'],
     );
     //List.from(json['drivers'])
