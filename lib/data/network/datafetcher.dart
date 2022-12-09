@@ -146,6 +146,23 @@ class Datafetcher {
         success: false, error: "Something went wrong logging in");
   }
 
+  static Future<Championship> getCurrentChampionship() async {
+    try {
+      final response =
+          await http.get(Uri.parse("$url/championships/1/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+      });
+      if (response.statusCode == 200) {
+        return Championship.fromJson(jsonDecode(response.body));
+      }
+      return Championship(id: 1, name: "2052 Formula Mars Championship");
+    } catch (e) {
+      print(e);
+      return Championship(id: 1, name: "2052 Formula Mars Championship");
+    }
+  }
+
   static Future<String> getUsername() async {
     try {
       final response = await http.get(Uri.parse("$url/user/"), headers: {
