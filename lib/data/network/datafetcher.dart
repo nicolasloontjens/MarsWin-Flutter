@@ -190,4 +190,38 @@ class Datafetcher {
       throw Exception("failed");
     }
   }
+
+  static Future<Race> getRaceResults(int id) async {
+    try {
+      final response = await http.get(Uri.parse('$url/races/$id/'), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+      });
+      if (response.statusCode == 200) {
+        return Race.fromJson(jsonDecode(response.body));
+      }
+      List<RaceDriver> drivers = [
+        RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
+      ];
+      return Race(
+          id: 1,
+          championship_id: 1,
+          name: 'the martian loop',
+          drivers: drivers,
+          date: DateTime.now(),
+          finished: true);
+    } catch (e) {
+      print(e);
+      List<RaceDriver> drivers = [
+        RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
+      ];
+      return Race(
+          id: 1,
+          championship_id: 1,
+          name: 'the martian loop',
+          drivers: drivers,
+          date: DateTime.now(),
+          finished: true);
+    }
+  }
 }

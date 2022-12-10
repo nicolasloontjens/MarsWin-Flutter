@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:marswin/pages/finishedRaceDetailPage.dart';
 import '../pages/login.dart';
 import '../pages/register.dart';
 import '../pages/home.dart';
-import '../pages/profile.dart';
 import 'package:get_storage/get_storage.dart';
 
 class RouteGenerator {
@@ -17,15 +17,22 @@ class RouteGenerator {
   }
 
   static Widget getWidget(String? name) {
-    switch (name) {
-      case '/login':
-        return LoginPage();
-      case '/register':
-        return RegisterPage();
-      case '/home':
-        return HomePage();
-      default:
-        return ErrorPage();
+    List<String> pathComponents = name!.split('/');
+    if (pathComponents.get(1) == 'race') {
+      return pathComponents.get(2) != null
+          ? FinishedRaceDetailPage(id: int.parse(pathComponents.get(2)!))
+          : ErrorPage();
+    } else {
+      switch (name) {
+        case '/login':
+          return LoginPage();
+        case '/register':
+          return RegisterPage();
+        case '/home':
+          return HomePage();
+        default:
+          return ErrorPage();
+      }
     }
   }
 
@@ -97,4 +104,8 @@ class _ErrorPageState extends State<ErrorPage> {
           ),
         ));
   }
+}
+
+extension ListGetExtension<T> on List<T> {
+  T? get(int index) => index < 0 || index >= this.length ? null : this[index];
 }
