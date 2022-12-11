@@ -57,21 +57,17 @@ class Datafetcher {
 
   static Future<int> getBalance() async {
     try {
-      //final response = await http.get(
-      //    Uri.parse(
-      //        "https://goapi-aicomyllevillestudent.koyeb.app/api/balance/"),
-      //    headers: {
-      //      "Content-Type": "application/json",
-      //      "Accept": "*/*",
-      //      "Authorization": ""
-      //    });
-      //if (response.statusCode == 200) {
-      //  return 1000;
-      //} else {
-      //  return 1000;
-      //}
-      await Future.delayed(Duration(seconds: 1));
-      return 420;
+      final response = await http.get(Uri.parse("$url/user/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Authorization": "Bearer " + await getToken()
+      });
+      if (response.statusCode == 200) {
+        int balance = jsonDecode(response.body)["wallet"];
+        debugPrint(balance.toString());
+        return balance;
+      }
+      return 0;
     } catch (e) {
       print(e);
       throw Exception("failed");
