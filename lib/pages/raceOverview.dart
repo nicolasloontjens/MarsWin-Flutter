@@ -103,6 +103,11 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter'),
                                         ),
+                                        onTap: () {
+                                          int id = snapshot.data![index].id;
+                                          Navigator.pushNamed(
+                                              context, '/race/$id');
+                                        },
                                         subtitle: Text(
                                             snapshot.data![index].date
                                                 .toString(),
@@ -165,6 +170,10 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter'),
                                         ),
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/races/live');
+                                        },
                                         subtitle: Text(
                                             snapshot.data![index].date
                                                 .toString(),
