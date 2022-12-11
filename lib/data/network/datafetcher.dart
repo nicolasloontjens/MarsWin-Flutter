@@ -145,7 +145,7 @@ class Datafetcher {
   static Future<Championship> getCurrentChampionship() async {
     try {
       final response =
-          await http.get(Uri.parse("$url/championships/1/"), headers: {
+          await http.get(Uri.parse("$url/championships/1"), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
       });
