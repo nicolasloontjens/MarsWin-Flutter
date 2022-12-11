@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:marswin/pages/finishedRaceDetailPage.dart';
+import 'package:marswin/pages/liveRaceDetailPage.dart';
 import '../pages/login.dart';
 import '../pages/register.dart';
 import '../pages/home.dart';
@@ -30,6 +31,8 @@ class RouteGenerator {
           return RegisterPage();
         case '/home':
           return HomePage();
+        case '/races/live':
+          return liveRaceDetailPage();
         default:
           return ErrorPage();
       }
