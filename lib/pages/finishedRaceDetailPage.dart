@@ -26,6 +26,7 @@ class _FinishedRaceDetailPageState extends State<FinishedRaceDetailPage> {
         body: SafeArea(
       child: Container(
           decoration: BoxDecoration(color: Color(0xFFF1EBE6)),
+          width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
             future: _race,
             builder: (context, snapshot) {
@@ -34,9 +35,12 @@ class _FinishedRaceDetailPageState extends State<FinishedRaceDetailPage> {
                   Text(snapshot.data!.name),
                 ]);
               }
-              return SpinKitCircle(
+              return Center(
+                  child: SpinKitWave(
                 color: Colors.black,
-              );
+                size: 40,
+                itemCount: 6,
+              ));
             },
           )),
     ));
