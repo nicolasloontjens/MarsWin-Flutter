@@ -97,15 +97,23 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                           color: Color(0xFFE87470),
                           border: Border.all(color: Colors.black, width: 2.0),
-                          borderRadius: BorderRadius.circular(5)),
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 0,
+                              offset: Offset(1, 1),
+                            )
+                          ]),
                       child: Center(
                           child: Text(
                         'Sign In',
                         style: TextStyle(
-                            fontFamily: "Inter",
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            fontSize: 16),
+                          fontFamily: "Inter",
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       )),
                     ),
                   )),
