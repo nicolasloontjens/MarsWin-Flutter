@@ -219,7 +219,7 @@ class Datafetcher {
 
   static Future<Race> getRaceResults(int id, {bool retry = false}) async {
     try {
-      final response = await http.get(Uri.parse('$url/races/$id/'), headers: {
+      final response = await http.get(Uri.parse('$url/races/$id'), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
       }).timeout(Duration(seconds: 5));
@@ -238,7 +238,7 @@ class Datafetcher {
       return Race(
           id: 1,
           championship_id: 1,
-          name: 'the martian loop',
+          name: 'The Martian Loop',
           drivers: drivers,
           date: DateTime.now(),
           finished: true);
