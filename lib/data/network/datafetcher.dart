@@ -11,17 +11,24 @@ import 'package:marswin/data/network/types/RaceDriver.dart';
 class Datafetcher {
   static String url = "https://go-api-lgafo.ondigitalocean.app/api";
 
-  static Future<List<Race>> getRaces() async {
+  static Future<List<Race>> getRaces({bool retry = false}) async {
     try {
-      final response = await http.get(Uri.parse("$url/races/"),
-          headers: {"Content-Type": "application/json", "Accept": "*/*"});
+      final response = await http.get(Uri.parse("$url/races/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*"
+      }).timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         List list = json.decode(response.body);
         List<Race> races = list.map((model) => Race.fromJson(model)).toList();
         return races;
-      } else {
-        throw Exception("Failed to load races");
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return getRaces(
+              retry:
+                  true); //the go api has some issues where it will sometimes return 400 on a request, we don't know why, but retrying fixes it.
+        }
       }
+      throw Exception("Failed to load races");
     } catch (e) {
       print(e);
       throw Exception("failed");
@@ -56,16 +63,22 @@ class Datafetcher {
     }
   }
 
-  static Future<int> getBalance() async {
+  static Future<int> getBalance({bool retry = false}) async {
     try {
       final response = await http.get(Uri.parse("$url/user/"), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
         "Authorization": "Bearer " + await getToken()
-      });
+      }).timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         int balance = jsonDecode(response.body)["wallet"];
         return balance;
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return getBalance(
+              retry:
+                  true); //the go api has some issues where it will sometimes return 400 on a request, we don't know why, but retrying fixes it.
+        }
       }
       return 0;
     } catch (e) {
@@ -89,16 +102,18 @@ class Datafetcher {
 
   static Future<AuthResponse> register(String username, String password) async {
     try {
-      final response = await http.post(
-        Uri.parse("$url/register"),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode(<String, String>{
-          "username": username,
-          "password": password,
-        }),
-      );
+      final response = await http
+          .post(
+            Uri.parse("$url/register"),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: jsonEncode(<String, String>{
+              "username": username,
+              "password": password,
+            }),
+          )
+          .timeout(Duration(seconds: 5));
 
       if (response.statusCode == 200) {
         return await login(username, password);
@@ -116,15 +131,17 @@ class Datafetcher {
 
   static Future<AuthResponse> login(String username, String password) async {
     try {
-      final response = await http.post(Uri.parse("$url/login"),
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "*/*",
-          },
-          body: jsonEncode(<String, String>{
-            "username": username,
-            "password": password,
-          }));
+      final response = await http
+          .post(Uri.parse("$url/login"),
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+              },
+              body: jsonEncode(<String, String>{
+                "username": username,
+                "password": password,
+              }))
+          .timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setInt("isLoggedIn", 1);
@@ -142,32 +159,45 @@ class Datafetcher {
         success: false, error: "Something went wrong logging in");
   }
 
-  static Future<Championship> getCurrentChampionship() async {
+  static Future<Championship> getCurrentChampionship(
+      {bool retry = false}) async {
     try {
       final response =
           await http.get(Uri.parse("$url/championships/1"), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
-      });
+      }).timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         return Championship.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return getCurrentChampionship(
+              retry:
+                  true); //the go api has some issues where it will sometimes return 400 on a request, we don't know why, but retrying fixes it.
+        }
       }
       return Championship(id: 1, name: "2052 Formula Mars Championship");
     } catch (e) {
       print(e);
-      return Championship(id: 1, name: "2052 Formula Mars Championship");
+      return Championship(id: 1, name: "failed to fetch");
     }
   }
 
-  static Future<User> getUser() async {
+  static Future<User> getUser({bool retry = false}) async {
     try {
       final response = await http.get(Uri.parse("$url/user/"), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
         "Authorization": "Bearer " + await getToken()
-      });
+      }).timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         return User.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return getUser(
+              retry:
+                  true); //the go api has some issues where it will sometimes return 400 on a request, we don't know why, but retrying fixes it.
+        }
       }
       return User(id: 0, username: "John Doe", wallet: 100);
     } catch (e) {
@@ -187,14 +217,20 @@ class Datafetcher {
     }
   }
 
-  static Future<Race> getRaceResults(int id) async {
+  static Future<Race> getRaceResults(int id, {bool retry = false}) async {
     try {
       final response = await http.get(Uri.parse('$url/races/$id/'), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
-      });
+      }).timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         return Race.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return getRaceResults(id,
+              retry:
+                  true); //the go api has some issues where it will sometimes return 400 on a request, we don't know why, but retrying fixes it.
+        }
       }
       List<RaceDriver> drivers = [
         RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
@@ -221,19 +257,28 @@ class Datafetcher {
     }
   }
 
-  static Future<bool> updateBalance(bool withdraw, int amount) async {
+  static Future<bool> updateBalance(bool withdraw, int amount,
+      {bool retry = false}) async {
     try {
-      final response = await http.put(Uri.parse("$url/user/"),
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "*/*",
-            "Authorization": "Bearer " + await getToken()
-          },
-          body: jsonEncode(<String, dynamic>{
-            "wallet": amount,
-          }));
+      final response = await http
+          .put(Uri.parse("$url/user/"),
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": "Bearer " + await getToken()
+              },
+              body: jsonEncode(<String, dynamic>{
+                "wallet": amount,
+              }))
+          .timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
         return true;
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return updateBalance(withdraw, amount,
+              retry:
+                  true); //the go api has some issues where it will sometimes return 400 on a request, we don't know why, but retrying fixes it.
+        }
       }
       return false;
     } catch (e) {
