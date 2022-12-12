@@ -35,29 +35,32 @@ class _WalletOverviewState extends State<WalletOverview> {
       inputBalance = currBal + inputBalance;
     }
     bool response = await Datafetcher.updateBalance(withdraw, inputBalance);
-    if (response) {
-      showToast(
-        "Balance updated",
-        context: context,
-        position: StyledToastPosition.top,
-        animation: StyledToastAnimation.slideFromTopFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        alignment: Alignment.bottomCenter,
-        backgroundColor: Colors.greenAccent,
-        duration: Duration(seconds: 3),
-      );
-    } else {
-      showToast(
-        "Could not update balance",
-        context: context,
-        position: StyledToastPosition.top,
-        animation: StyledToastAnimation.slideFromTopFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        alignment: Alignment.bottomCenter,
-        backgroundColor: Colors.redAccent,
-        duration: Duration(seconds: 3),
-      );
-    }
+    String msg = response ? "Balance updated" : "Could not update balance";
+    Color color = response ? Colors.greenAccent : Colors.redAccent;
+    showToast(
+      msg,
+      context: context,
+      position: StyledToastPosition.top,
+      animation: StyledToastAnimation.slideFromTopFade,
+      reverseAnimation: StyledToastAnimation.fade,
+      alignment: Alignment.bottomCenter,
+      backgroundColor: color,
+      duration: Duration(seconds: 3),
+      shapeBorder: ShapeBorder.lerp(
+          Border(
+            top: BorderSide(color: Colors.black, width: 2.0),
+            left: BorderSide(color: Colors.black, width: 2.0),
+            right: BorderSide(color: Colors.black, width: 3.0),
+            bottom: BorderSide(color: Colors.black, width: 3.0),
+          ),
+          Border(
+            top: BorderSide(color: Colors.black, width: 2.0),
+            left: BorderSide(color: Colors.black, width: 2.0),
+            right: BorderSide(color: Colors.black, width: 3.0),
+            bottom: BorderSide(color: Colors.black, width: 3.0),
+          ),
+          0.5),
+    );
     setState(() {
       _amountController.clear();
       _key = UniqueKey();
