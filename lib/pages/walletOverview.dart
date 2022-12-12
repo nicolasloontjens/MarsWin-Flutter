@@ -2,6 +2,7 @@ import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:marswin/data/network/datafetcher.dart';
 
@@ -15,6 +16,7 @@ class WalletOverview extends StatefulWidget {
 class _WalletOverviewState extends State<WalletOverview> {
   late Future<int> balance;
   int showOverview = 0;
+  Key _key = UniqueKey();
   TextEditingController _amountController = TextEditingController();
 
   @override
@@ -24,11 +26,52 @@ class _WalletOverviewState extends State<WalletOverview> {
     balance = Datafetcher.getBalance();
   }
 
+  Future editBalance(bool withdraw) async {
+    int currBal = await Datafetcher.getBalance();
+    int inputBalance = int.parse(_amountController.text);
+    if (withdraw) {
+      inputBalance = currBal - inputBalance;
+    } else {
+      inputBalance = currBal + inputBalance;
+    }
+    bool response = await Datafetcher.updateBalance(withdraw, inputBalance);
+    if (response) {
+      showToast(
+        "Balance updated",
+        context: context,
+        position: StyledToastPosition.top,
+        animation: StyledToastAnimation.slideFromTopFade,
+        reverseAnimation: StyledToastAnimation.fade,
+        alignment: Alignment.bottomCenter,
+        backgroundColor: Colors.greenAccent,
+        duration: Duration(seconds: 3),
+      );
+    } else {
+      showToast(
+        "Could not update balance",
+        context: context,
+        position: StyledToastPosition.top,
+        animation: StyledToastAnimation.slideFromTopFade,
+        reverseAnimation: StyledToastAnimation.fade,
+        alignment: Alignment.bottomCenter,
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 3),
+      );
+    }
+    setState(() {
+      _amountController.clear();
+      _key = UniqueKey();
+      showOverview = 0;
+      balance = Datafetcher.getBalance();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          key: _key,
           decoration: BoxDecoration(color: Color(0xFFF1EBE6)),
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -84,7 +127,14 @@ class _WalletOverviewState extends State<WalletOverview> {
                                                   color: Colors.black,
                                                   width: 2.0),
                                               borderRadius:
-                                                  BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 0,
+                                                  offset: Offset(1, 1),
+                                                )
+                                              ]),
                                           child: Center(
                                               child: Text(
                                             'Add funds',
@@ -117,7 +167,14 @@ class _WalletOverviewState extends State<WalletOverview> {
                                                   color: Colors.black,
                                                   width: 2.0),
                                               borderRadius:
-                                                  BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 0,
+                                                  offset: Offset(1, 1),
+                                                )
+                                              ]),
                                           child: Center(
                                               child: Text(
                                             'Withdraw funds',
@@ -174,7 +231,9 @@ class _WalletOverviewState extends State<WalletOverview> {
                                   Container(
                                     padding: EdgeInsets.only(top: 25),
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        await editBalance(false);
+                                      },
                                       child: Container(
                                         height: 40,
                                         width:
@@ -186,7 +245,14 @@ class _WalletOverviewState extends State<WalletOverview> {
                                                 color: Colors.black,
                                                 width: 2.0),
                                             borderRadius:
-                                                BorderRadius.circular(5)),
+                                                BorderRadius.circular(5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black,
+                                                blurRadius: 0,
+                                                offset: Offset(1, 1),
+                                              )
+                                            ]),
                                         child: Center(
                                             child: Text(
                                           'Add',
@@ -218,7 +284,14 @@ class _WalletOverviewState extends State<WalletOverview> {
                                                 color: Colors.black,
                                                 width: 2.0),
                                             borderRadius:
-                                                BorderRadius.circular(5)),
+                                                BorderRadius.circular(5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black,
+                                                blurRadius: 0,
+                                                offset: Offset(1, 1),
+                                              )
+                                            ]),
                                         child: Center(
                                             child: Text(
                                           'Cancel',
@@ -277,7 +350,9 @@ class _WalletOverviewState extends State<WalletOverview> {
                                   Container(
                                     padding: EdgeInsets.only(top: 25),
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        await editBalance(true);
+                                      },
                                       child: Container(
                                         height: 40,
                                         width:
@@ -289,7 +364,14 @@ class _WalletOverviewState extends State<WalletOverview> {
                                                 color: Colors.black,
                                                 width: 2.0),
                                             borderRadius:
-                                                BorderRadius.circular(5)),
+                                                BorderRadius.circular(5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black,
+                                                blurRadius: 0,
+                                                offset: Offset(1, 1),
+                                              )
+                                            ]),
                                         child: Center(
                                             child: Text(
                                           'Withdraw',
@@ -321,7 +403,14 @@ class _WalletOverviewState extends State<WalletOverview> {
                                                 color: Colors.black,
                                                 width: 2.0),
                                             borderRadius:
-                                                BorderRadius.circular(5)),
+                                                BorderRadius.circular(5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black,
+                                                blurRadius: 0,
+                                                offset: Offset(1, 1),
+                                              )
+                                            ]),
                                         child: Center(
                                             child: Text(
                                           'Cancel',

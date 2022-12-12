@@ -154,10 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: EdgeInsets.only(top: 25),
                 child: GestureDetector(
                   onTap: () async {
-                    Navigator.of(context).pushNamed(
-                      '/race/7',
-                    );
-                    //_logoutUser();
+                    _logoutUser();
                   },
                   child: Container(
                     height: 40,
