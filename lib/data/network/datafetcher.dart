@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:marswin/data/network/types/AuthResponse.dart';
+import 'package:marswin/data/network/types/LiveRace.dart';
 import 'package:marswin/data/network/types/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -281,6 +282,25 @@ class Datafetcher {
         }
       }
       return false;
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
+    }
+  }
+
+  static Future<LiveRace> getLiveRace() async {
+    try {
+      final response = await http.get(Uri.parse("$url/races/live/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Authorization": "Bearer " + await getToken()
+      }).timeout(Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        //return LiveRace.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 400) {
+        return LiveRace.failed(false);
+      }
+      return LiveRace.failed(false);
     } catch (e) {
       print(e);
       throw Exception("failed");
