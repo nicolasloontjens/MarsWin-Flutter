@@ -84,6 +84,9 @@ flutter:
     - family: Nasalization
       fonts:
         - asset: assets/fonts/Nasalization/nasalization.otf
+    - family: Baloo2
+      fonts:
+        - asset: assets/fonts/Baloo2/Baloo2-ExtraBold.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
