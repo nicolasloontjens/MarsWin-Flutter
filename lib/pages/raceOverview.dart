@@ -202,6 +202,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
                           return RefreshIndicator(
+                            color: Color(0xFFE75657),
                             onRefresh: () async {
                               await refresh();
                             },
@@ -284,6 +285,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
                           return RefreshIndicator(
+                            color: Color(0xFFE75657),
                             onRefresh: () async {
                               await refresh();
                             },
