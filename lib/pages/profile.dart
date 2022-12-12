@@ -61,8 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             Container(
                               child: Image.asset(
                                   'assets/images/marswin-no-text.png',
-                                  height: 75,
-                                  width: 75),
+                                  height: 50,
+                                  width: 50),
                             ),
                             SizedBox(width: 10),
                             Container(
@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               children: [
                                                 Text(snapshot.data!.username,
                                                     style: TextStyle(
-                                                        fontSize: 32,
+                                                        fontSize: 24,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontFamily:
@@ -116,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   )),
               Container(
-                padding: EdgeInsets.only(top: 60),
+                padding: EdgeInsets.only(top: 40),
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(
@@ -136,36 +136,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Center(
                         child: Text(
                       'Bet history',
-                      style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16),
-                    )),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 25),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * 0.40,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE87470),
-                        border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 0,
-                            offset: Offset(1, 1),
-                          )
-                        ]),
-                    child: Center(
-                        child: Text(
-                      'Change password',
                       style: TextStyle(
                           fontFamily: "Inter",
                           fontWeight: FontWeight.w500,
