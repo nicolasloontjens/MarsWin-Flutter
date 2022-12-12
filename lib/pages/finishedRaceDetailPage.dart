@@ -77,6 +77,27 @@ class _FinishedRaceDetailPageState extends State<FinishedRaceDetailPage> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
+                      SizedBox(height: 12),
+                      Center(
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.drivers.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: Text(
+                                snapshot.data!.drivers[index].name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Inter',
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            );
+                          },
+                        ),
+                      )
                     ]);
                   }
                   return Center(

@@ -52,9 +52,20 @@ class _StandingsPageState extends State<StandingsPage> {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 50),
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.drivers.length,
+                                itemBuilder: ((context, index) {
+                                  return Container(
+                                      child: Text(
+                                          snapshot.data!.drivers[index].name));
+                                }),
+                              ),
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.black, width: 1)),
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
+                              ),
                             ),
                           ],
                         ),
