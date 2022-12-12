@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:marswin/data/network/types/AuthResponse.dart';
+import 'package:marswin/data/network/types/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:marswin/data/network/types/Championship.dart';
@@ -158,7 +159,7 @@ class Datafetcher {
     }
   }
 
-  static Future<String> getUsername() async {
+  static Future<User> getUser() async {
     try {
       final response = await http.get(Uri.parse("$url/user/"), headers: {
         "Content-Type": "application/json",
@@ -166,9 +167,9 @@ class Datafetcher {
         "Authorization": "Bearer " + await getToken()
       });
       if (response.statusCode == 200) {
-        return jsonDecode(response.body)["username"];
+        return User.fromJson(jsonDecode(response.body));
       }
-      return "";
+      return User(id: 0, username: "John Doe", wallet: 100);
     } catch (e) {
       print(e);
       throw Exception("failed");

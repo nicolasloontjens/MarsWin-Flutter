@@ -2,6 +2,7 @@ import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marswin/data/network/datafetcher.dart';
+import 'package:marswin/data/network/types/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "../routing/route_generator.dart";
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late Future<String> _username;
+  late Future<User> _user;
   Future<void> _launchSupportPage() async {
     final Uri _supportUrl = Uri.parse("https://www.gamblingtherapy.org/");
     if (!await launchUrl(_supportUrl)) {
@@ -31,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _username = Datafetcher.getUsername();
+    _user = Datafetcher.getUser();
   }
 
   @override
@@ -68,16 +69,38 @@ class _ProfilePageState extends State<ProfilePage> {
                                 margin: EdgeInsets.only(left: 20),
                                 child: Column(
                                   children: [
-                                    FutureBuilder<String>(
-                                        future: _username,
+                                    FutureBuilder<User>(
+                                        future: _user,
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
-                                            return Text(snapshot.data!,
-                                                style: TextStyle(
-                                                    fontSize: 32,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily:
-                                                        'Nasalization'));
+                                            return Column(
+                                              children: [
+                                                Text(snapshot.data!.username,
+                                                    style: TextStyle(
+                                                        fontSize: 32,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontFamily:
+                                                            'Nasalization')),
+                                                SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    Icon(CarbonIcons.currency),
+                                                    Text(
+                                                        snapshot.data!.wallet
+                                                            .toString(),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontFamily:
+                                                                'Nasalization')),
+                                                  ],
+                                                )
+                                              ],
+                                            );
                                           } else if (snapshot.hasError) {
                                             return Text('${snapshot.error}');
                                           }
@@ -85,18 +108,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                             color: Colors.black,
                                           );
                                         }),
-                                    SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        Icon(CarbonIcons.currency),
-                                        Text('  1000',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: 'Nasalization')),
-                                      ],
-                                    )
                                   ],
                                 ))
                           ],
@@ -114,7 +125,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                         color: Color(0xFFE87470),
                         border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 0,
+                            offset: Offset(1, 1),
+                          )
+                        ]),
                     child: Center(
                         child: Text(
                       'Bet history',
@@ -137,7 +155,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                         color: Color(0xFFE87470),
                         border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 0,
+                            offset: Offset(1, 1),
+                          )
+                        ]),
                     child: Center(
                         child: Text(
                       'Change password',
@@ -162,7 +187,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                         color: Color(0xFFE87470),
                         border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 0,
+                            offset: Offset(1, 1),
+                          )
+                        ]),
                     child: Center(
                         child: Text(
                       'Log out',
@@ -186,7 +218,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                         color: Color(0xFFE87470),
                         border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 0,
+                            offset: Offset(1, 1),
+                          )
+                        ]),
                     child: Center(
                         child: Text(
                       'Get support',
