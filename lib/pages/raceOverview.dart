@@ -38,6 +38,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF1EBE6),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(color: Color(0xFFF1EBE6)),
@@ -55,9 +56,33 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data!.success) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black,
+                                  blurRadius: 0,
+                                  spreadRadius: 3.5,
+                                  offset: Offset(1, 1),
+                                ),
+                                BoxShadow(
+                                  color: Color(0xFFF1EBE6),
+                                  blurRadius: 0,
+                                  offset: Offset(0, 0),
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Text(""),
+                              GestureDetector(onTap: () {}, child: Container())
+                            ],
+                          ),
+                        );
                       } else {
                         return Container(
-                          width: MediaQuery.of(context).size.width * 0.60,
+                          width: MediaQuery.of(context).size.width * 0.70,
                           padding:
                               EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           decoration: BoxDecoration(
@@ -82,7 +107,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                 "Currently no live race, \nwhy don't you look around for a bit?",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -91,7 +116,8 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                               GestureDetector(
                                 onTap: () {},
                                 child: Container(
-                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 5),
                                   decoration: BoxDecoration(
@@ -208,40 +234,18 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                         title: Text(
                                           snapshot.data![index].name,
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 22,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter'),
                                         ),
-                                        trailing: GestureDetector(
-                                          onTap: () {
-                                            int id = snapshot.data![index].id;
-                                            Navigator.pushNamed(
-                                                context, '/race/$id');
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(right: 20),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  CarbonIcons
-                                                      .information_square,
-                                                  size: 30,
-                                                  color: Colors.black,
-                                                ),
-                                                Text(
-                                                  'View results',
-                                                  style: TextStyle(
-                                                      fontFamily: 'Inter'),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
+                                        onTap: () {
+                                          int id = snapshot.data![index].id;
+                                          Navigator.pushNamed(
+                                              context, '/race/$id');
+                                        },
                                         subtitle: Text(
-                                            DateFormat('yyyy-MM-dd – kk:mm')
-                                                .format(
-                                                    snapshot.data![index].date),
+                                            "${DateFormat('yyyy-MM-dd – kk:mm').format(snapshot.data![index].date)} \nView results",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontFamily: 'Inter',
@@ -250,10 +254,11 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(0.5)),
-                                        contentPadding: EdgeInsets.all(0.5),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 5),
                                         leading: Container(
-                                          width: 100,
-                                          height: 100,
+                                          width: 70,
+                                          height: 70,
                                           decoration: BoxDecoration(
                                               image: const DecorationImage(
                                             fit: BoxFit.fitHeight,
@@ -311,34 +316,10 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                         title: Text(
                                           snapshot.data![index].name,
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 22,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
                                               fontFamily: 'Inter'),
-                                        ),
-                                        trailing: GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushNamed(
-                                                context, '/races/live');
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(right: 20),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  CarbonIcons
-                                                      .information_square,
-                                                  size: 30,
-                                                  color: Colors.black,
-                                                ),
-                                                Text(
-                                                  'View results',
-                                                  style: TextStyle(
-                                                      fontFamily: 'Inter'),
-                                                )
-                                              ],
-                                            ),
-                                          ),
                                         ),
                                         subtitle: Text(
                                             DateFormat('yyyy-MM-dd – kk:mm')
@@ -354,8 +335,8 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                                 BorderRadius.circular(0.5)),
                                         contentPadding: EdgeInsets.all(0.5),
                                         leading: Container(
-                                          width: 100,
-                                          height: 100,
+                                          width: 70,
+                                          height: 70,
                                           decoration: BoxDecoration(
                                               image: const DecorationImage(
                                             fit: BoxFit.fitHeight,
