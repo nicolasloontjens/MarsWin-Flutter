@@ -81,7 +81,6 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                         future: finishedRaces,
                         builder: ((context, snapshot) {
                           if (snapshot.hasData) {
-                            print(snapshot.data);
                             return ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,

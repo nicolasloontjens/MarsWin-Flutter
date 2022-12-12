@@ -64,7 +64,6 @@ class Datafetcher {
       });
       if (response.statusCode == 200) {
         int balance = jsonDecode(response.body)["wallet"];
-        debugPrint(balance.toString());
         return balance;
       }
       return 0;
@@ -218,6 +217,27 @@ class Datafetcher {
           drivers: drivers,
           date: DateTime.now(),
           finished: true);
+    }
+  }
+
+  static Future<bool> updateBalance(bool withdraw, int amount) async {
+    try {
+      final response = await http.put(Uri.parse("$url/user/"),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+            "Authorization": "Bearer " + await getToken()
+          },
+          body: jsonEncode(<String, dynamic>{
+            "wallet": amount,
+          }));
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print(e);
+      throw Exception("failed");
     }
   }
 }
