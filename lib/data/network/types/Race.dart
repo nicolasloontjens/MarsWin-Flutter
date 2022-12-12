@@ -5,33 +5,38 @@ class Race {
   final int id;
   final int championship_id;
   final String name;
-  final List<RaceDriver> drivers;
+  List<RaceDriver> drivers;
   final DateTime date;
   final bool finished;
 
-  const Race({
+  Race({
     required this.id,
     required this.championship_id,
     required this.name,
-    required this.drivers,
+    this.drivers = const [],
     required this.date,
     required this.finished,
   });
 
   factory Race.fromJson(Map<String, dynamic> json) {
-    List<RaceDriver> drivers = [
-      RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
-    ];
+    if (json['drivers'] != null) {
+      return Race(
+        id: json['id'],
+        championship_id: json['championshipId'],
+        name: json['name'],
+        drivers: List.from(json['drivers'])
+            .map((model) => RaceDriver.fromJson(Map.from(model)))
+            .toList(),
+        date: DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(json['date']),
+        finished: json['finished'],
+      );
+    }
     return Race(
       id: json['id'],
       championship_id: json['championshipId'],
       name: json['name'],
-      drivers: drivers,
       date: DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(json['date']),
       finished: json['finished'],
     );
-    //List.from(json['drivers'])
-    //      .map((model) => RaceDriver.fromJson(Map.from(model)))
-    //      .toList(),
   }
 }

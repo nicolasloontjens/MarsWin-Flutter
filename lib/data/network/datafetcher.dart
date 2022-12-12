@@ -32,7 +32,7 @@ class Datafetcher {
       throw Exception("Failed to load races");
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to get races");
     }
   }
 
@@ -46,7 +46,7 @@ class Datafetcher {
       return races;
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to get finished races");
     }
   }
 
@@ -60,7 +60,7 @@ class Datafetcher {
       return races;
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to get planned races");
     }
   }
 
@@ -84,7 +84,7 @@ class Datafetcher {
       return 0;
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception('Failed to load balance');
     }
   }
 
@@ -124,7 +124,7 @@ class Datafetcher {
       }
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to register");
     }
     return AuthResponse(
         success: false, error: "Something went wrong registering");
@@ -154,7 +154,7 @@ class Datafetcher {
       }
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to login");
     }
     return AuthResponse(
         success: false, error: "Something went wrong logging in");
@@ -203,7 +203,7 @@ class Datafetcher {
       return User(id: 0, username: "John Doe", wallet: 100);
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to load user");
     }
   }
 
@@ -234,7 +234,7 @@ class Datafetcher {
         }
       }
       List<RaceDriver> drivers = [
-        RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
+        RaceDriver(id: 1, name: "Michael Schumacher")
       ];
       return Race(
           id: 1,
@@ -246,7 +246,7 @@ class Datafetcher {
     } catch (e) {
       print(e);
       List<RaceDriver> drivers = [
-        RaceDriver(id: 1, driver: "Michael Schumacher", place: 1)
+        RaceDriver(id: 1, name: "Michael Schumacher")
       ];
       return Race(
           id: 1,
@@ -284,7 +284,7 @@ class Datafetcher {
       return false;
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to update balance");
     }
   }
 
@@ -296,14 +296,14 @@ class Datafetcher {
         "Authorization": "Bearer " + await getToken()
       }).timeout(Duration(seconds: 5));
       if (response.statusCode == 200) {
-        //return LiveRace.fromJson(jsonDecode(response.body));
+        return LiveRace.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 400) {
         return LiveRace.failed(false);
       }
       return LiveRace.failed(false);
     } catch (e) {
       print(e);
-      throw Exception("failed");
+      throw Exception("Failed to get live race");
     }
   }
 }

@@ -1,16 +1,13 @@
 class RaceDriver {
   final int id;
-  final String driver;
-  final int place;
+  final String name;
 
-  const RaceDriver(
-      {required this.id, required this.driver, required this.place});
+  const RaceDriver({required this.id, required this.name});
 
   factory RaceDriver.fromJson(Map<String, dynamic> json) {
     return RaceDriver(
       id: json['id'],
-      driver: json['driver'],
-      place: json['place'],
+      name: json['name'],
     );
   }
 }

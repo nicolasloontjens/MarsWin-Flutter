@@ -11,4 +11,8 @@ class LiveRace {
       : id = null,
         race = null,
         url = null;
+
+  factory LiveRace.fromJson(Map<String, dynamic> json) {
+    return LiveRace(json['id'], Race.fromJson(json['race']), json['url'], true);
+  }
 }
