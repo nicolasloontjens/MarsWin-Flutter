@@ -28,6 +28,20 @@ class _LoginPageState extends State<LoginPage> {
         reverseAnimation: StyledToastAnimation.fade,
         alignment: Alignment.bottomCenter,
         backgroundColor: Colors.redAccent,
+        shapeBorder: ShapeBorder.lerp(
+            Border(
+              top: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 3.0),
+              bottom: BorderSide(color: Colors.black, width: 3.0),
+            ),
+            Border(
+              top: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 3.0),
+              bottom: BorderSide(color: Colors.black, width: 3.0),
+            ),
+            0.5),
         duration: Duration(seconds: 3),
       );
       _passwordController.clear();
