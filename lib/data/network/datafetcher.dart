@@ -258,7 +258,7 @@ class Datafetcher {
     }
   }
 
-  static Future<bool> updateBalance(bool withdraw, int amount,
+  static Future<bool> updateBalance(String withdraw, int amount,
       {bool retry = false}) async {
     try {
       final response = await http
@@ -269,6 +269,7 @@ class Datafetcher {
                 "Authorization": "Bearer " + await getToken()
               },
               body: jsonEncode(<String, dynamic>{
+                "type": withdraw,
                 "wallet": amount,
               }))
           .timeout(Duration(seconds: 5));
