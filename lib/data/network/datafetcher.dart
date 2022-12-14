@@ -358,4 +358,29 @@ class Datafetcher {
     });
     return betResponses;
   }
+
+  static Future<bool> placeBet(int driverId, int raceId, int amount) async {
+    try {
+      final response = await http
+          .post(Uri.parse("$url/bets/"),
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": "Bearer " + await getToken()
+              },
+              body: jsonEncode(<String, dynamic>{
+                "driver_id": driverId,
+                "race_id": raceId,
+                "amount": amount
+              }))
+          .timeout(Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print(e);
+      throw Exception("Failed to place bet");
+    }
+  }
 }
