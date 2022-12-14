@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:marswin/pages/betOverview.dart';
 import 'package:marswin/pages/finishedRaceDetailPage.dart';
 import 'package:marswin/pages/liveRaceDetailPage.dart';
 import '../pages/login.dart';
@@ -33,6 +34,8 @@ class RouteGenerator {
           return HomePage();
         case '/races/live':
           return liveRaceDetailPage();
+        case '/bets':
+          return BetOverview();
         default:
           return ErrorPage();
       }
