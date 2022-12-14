@@ -118,7 +118,9 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 40),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/bets');
+                  },
                   child: Container(
                     height: 40,
                     width: MediaQuery.of(context).size.width * 0.40,
