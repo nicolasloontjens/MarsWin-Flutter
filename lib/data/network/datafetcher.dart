@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:marswin/data/network/types/AuthResponse.dart';
 import 'package:marswin/data/network/types/Bet.dart';
 import 'package:marswin/data/network/types/BetResponse.dart';
@@ -42,10 +43,7 @@ class Datafetcher {
   static Future<List<Race>> getFinishedRaces() async {
     try {
       List<Race> races = await getRaces();
-      races.retainWhere((element) {
-        return element.date
-            .isBefore(DateTime(2052, DateTime.now().month, DateTime.now().day));
-      });
+      races.retainWhere((element) => element.finished);
       return races;
     } catch (e) {
       print(e);
@@ -56,10 +54,7 @@ class Datafetcher {
   static Future<List<Race>> getPlannedRaces() async {
     try {
       List<Race> races = await getRaces();
-      races.retainWhere((element) {
-        return element.date
-            .isAfter(DateTime(2052, DateTime.now().month, DateTime.now().day));
-      });
+      races.retainWhere((element) => false == element.finished);
       return races;
     } catch (e) {
       print(e);
@@ -380,6 +375,17 @@ class Datafetcher {
     } catch (e) {
       print(e);
       throw Exception("Failed to place bet");
+    }
+  }
+
+  static Future<int> getRandomRaceId() async {
+    try {
+      List<Race> races = await getFinishedRaces();
+      Random random = new Random();
+      return races[random.nextInt(races.length - 1)].id;
+    } catch (e) {
+      print(e);
+      throw Exception("Failed to get random race");
     }
   }
 }

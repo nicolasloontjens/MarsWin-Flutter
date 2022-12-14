@@ -176,7 +176,12 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                               ),
                               SizedBox(height: 5),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  int raceId =
+                                      await Datafetcher.getRandomRaceId();
+                                  Navigator.of(context)
+                                      .pushNamed("/race/${raceId}");
+                                },
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 10),
@@ -357,7 +362,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: ((context, index) {
                                   snapshot.data!
-                                      .sort((a, b) => b.date.compareTo(a.date));
+                                      .sort((a, b) => a.date.compareTo(b.date));
                                   return Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 45, vertical: 12),
