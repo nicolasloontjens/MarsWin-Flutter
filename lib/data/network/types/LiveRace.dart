@@ -13,6 +13,9 @@ class LiveRace {
         url = null;
 
   factory LiveRace.fromJson(Map<String, dynamic> json) {
-    return LiveRace(json['id'], Race.fromJson(json['race']), json['url'], true);
+    LiveRace race =
+        LiveRace(json['id'], Race.fromJson(json['race']), json['url'], true);
+    race.race!.drivers.sort((a, b) => b.position - a.position);
+    return race;
   }
 }
