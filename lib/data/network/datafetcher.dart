@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:marswin/data/network/types/AuthResponse.dart';
 import 'package:marswin/data/network/types/Bet.dart';
+import 'package:marswin/data/network/types/BetResponse.dart';
+import 'package:marswin/data/network/types/Driver.dart';
 import 'package:marswin/data/network/types/LiveRace.dart';
 import 'package:marswin/data/network/types/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -235,7 +237,7 @@ class Datafetcher {
         }
       }
       List<RaceDriver> drivers = [
-        RaceDriver(id: 1, name: "Michael Schumacher")
+        RaceDriver(id: 1, name: "Michael Schumacher", position: 1, laps: 25)
       ];
       return Race(
           id: 1,
@@ -247,7 +249,7 @@ class Datafetcher {
     } catch (e) {
       print(e);
       List<RaceDriver> drivers = [
-        RaceDriver(id: 1, name: "Michael Schumacher")
+        RaceDriver(id: 1, name: "Michael Schumacher", position: 1, laps: 25)
       ];
       return Race(
           id: 1,
@@ -309,26 +311,51 @@ class Datafetcher {
     }
   }
 
-  static Future<List<Bet>> getBets({bool retry = false}) async {
+  static Future<List<BetResponse>> getBets({bool retry = false}) async {
     try {
-      final response = await http.get(Uri.parse("$url/bets/"), headers: {
+      final betResponse = await http.get(Uri.parse("$url/bets/"), headers: {
         "Content-Type": "application/json",
         "Accept": "*/*",
         "Authorization": "Bearer " + await getToken()
       }).timeout(Duration(seconds: 5));
-      if (response.statusCode == 200) {
-        List<dynamic> bets = jsonDecode(response.body);
-        return bets.map((bet) => Bet.fromJson(bet)).toList();
-      } else if (response.statusCode == 400) {
+      final driverResponse =
+          await http.get(Uri.parse("$url/drivers/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Authorization": "Bearer " + await getToken()
+      }).timeout(Duration(seconds: 5));
+      if (betResponse.statusCode == 200 && driverResponse.statusCode == 200) {
+        debugPrint('both requests good!');
+        List<dynamic> bets = jsonDecode(betResponse.body)
+            .map((bet) => Bet.fromJson(bet))
+            .toList();
+        List<dynamic> drivers = jsonDecode(driverResponse.body)
+            .map((driver) => Driver.fromJson(driver))
+            .toList();
+        return mergeBetsAndDrivers(bets, drivers);
+      } else if (betResponse.statusCode == 400 ||
+          driverResponse.statusCode == 400) {
         if (!retry) {
           return getBets(retry: true);
         }
-        return [];
+        throw Exception("Failed to load bets");
       }
-      return [];
+      throw Exception("Failed to get bets");
     } catch (e) {
       print(e);
       throw Exception("Failed to get bets");
     }
+  }
+
+  static List<BetResponse> mergeBetsAndDrivers(
+      List<dynamic> bets, List<dynamic> drivers) {
+    List<BetResponse> betResponses = [];
+    bets.forEach((element) {
+      betResponses.add(BetResponse(
+          bet: element,
+          driver:
+              drivers.firstWhere((driver) => driver.id == element.driverId)));
+    });
+    return betResponses;
   }
 }
