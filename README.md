@@ -2,6 +2,8 @@
 
 A Flutter application for the MarsWin betting site.
 
+[![Deploy to Firebase Hosting](https://github.com/nicolasloontjens/MarsWin-Flutter/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/nicolasloontjens/MarsWin-Flutter/actions/workflows/firebase-hosting-merge.yml)
+
 ## Info:
 
 The application is available at <a href="https://marswin.nicolasloontjens.com">here</a>.  
