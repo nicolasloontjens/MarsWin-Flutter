@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:marswin/data/network/types/AuthResponse.dart';
+import 'package:marswin/data/network/types/Bet.dart';
 import 'package:marswin/data/network/types/LiveRace.dart';
 import 'package:marswin/data/network/types/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -305,6 +306,29 @@ class Datafetcher {
     } catch (e) {
       print(e);
       throw Exception("Failed to get live race");
+    }
+  }
+
+  static Future<List<Bet>> getBets({bool retry = false}) async {
+    try {
+      final response = await http.get(Uri.parse("$url/bets/"), headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Authorization": "Bearer " + await getToken()
+      }).timeout(Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        List<dynamic> bets = jsonDecode(response.body);
+        return bets.map((bet) => Bet.fromJson(bet)).toList();
+      } else if (response.statusCode == 400) {
+        if (!retry) {
+          return getBets(retry: true);
+        }
+        return [];
+      }
+      return [];
+    } catch (e) {
+      print(e);
+      throw Exception("Failed to get bets");
     }
   }
 }
