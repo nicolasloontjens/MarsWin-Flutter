@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:marswin/data/network/datafetcher.dart';
 import 'package:marswin/data/network/types/AuthResponse.dart';
+import 'package:marswin/pages/generalElements.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -100,37 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                   )),
               SizedBox(height: 20),
               //submit
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 75.0),
-                  child: GestureDetector(
-                    onTap: () async {
-                      await _loginUser(context);
-                    },
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Color(0xFFE87470),
-                          border: Border.all(color: Colors.black, width: 2.0),
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 0,
-                              offset: Offset(1, 1),
-                            )
-                          ]),
-                      child: Center(
-                          child: Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      )),
-                    ),
-                  )),
+              GeneralElements.getActionButton("Sign in", () async {
+                await _loginUser(context);
+              }, context, width: 0.70),
               SizedBox(height: 15),
               //register text
               Padding(

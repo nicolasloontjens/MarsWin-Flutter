@@ -6,7 +6,7 @@ class GeneralElements {
 
   static Widget getActionButton(
       String content, Function func, BuildContext context,
-      {Color color = const Color(0xFFE87470)}) {
+      {Color color = const Color(0xFFE87470), double width = 0.40}) {
     return Container(
       child: GestureDetector(
         onTap: () async {
@@ -14,7 +14,7 @@ class GeneralElements {
         },
         child: Container(
           height: 40,
-          width: MediaQuery.of(context).size.width * 0.40,
+          width: MediaQuery.of(context).size.width * width,
           decoration: BoxDecoration(
               color: color,
               border: Border.all(color: Colors.black, width: 2.0),

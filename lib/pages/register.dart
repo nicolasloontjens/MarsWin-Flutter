@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:marswin/data/network/types/AuthResponse.dart';
+import 'package:marswin/pages/generalElements.dart';
 import "../data/network/datafetcher.dart";
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
@@ -117,36 +118,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   )),
               SizedBox(height: 20),
               //submit
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 75.0),
-                  child: GestureDetector(
-                    onTap: () async {
-                      await _registerUser(context);
-                    },
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Color(0xFFE87470),
-                          border: Border.all(color: Colors.black, width: 2.0),
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 0,
-                              offset: Offset(1, 1),
-                            )
-                          ]),
-                      child: Center(
-                          child: Text(
-                        'Create an account!',
-                        style: TextStyle(
-                            fontFamily: "Inter",
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            fontSize: 16),
-                      )),
-                    ),
-                  )),
+              GeneralElements.getActionButton("Create an account!", () async {
+                await _registerUser(context);
+              }, context, width: 0.70),
               SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),

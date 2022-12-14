@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -34,6 +36,11 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     _user = Datafetcher.getUser();
+    Timer.periodic(
+        Duration(seconds: 2),
+        (Timer t) => setState(() {
+              _user = Datafetcher.getUser();
+            }));
   }
 
   @override
@@ -87,6 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 Row(
                                                   children: [
                                                     Icon(CarbonIcons.currency),
+                                                    SizedBox(width: 5),
                                                     Text(
                                                         snapshot.data!.wallet
                                                             .toString(),
