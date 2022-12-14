@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carbon_icons/carbon_icons.dart';
 import "package:flutter/material.dart";
 import 'package:marswin/data/network/datafetcher.dart';
@@ -26,6 +28,13 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
     finishedRaces = Datafetcher.getFinishedRaces();
     plannedRaces = Datafetcher.getPlannedRaces();
     liveRace = Datafetcher.getLiveRace();
+    Timer.periodic(
+        Duration(seconds: 10),
+        (Timer t) => setState(() {
+              liveRace = Datafetcher.getLiveRace();
+              finishedRaces = Datafetcher.getFinishedRaces();
+              plannedRaces = Datafetcher.getPlannedRaces();
+            }));
   }
 
   Future refresh() async {
