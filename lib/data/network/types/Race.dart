@@ -20,7 +20,7 @@ class Race {
 
   factory Race.fromJson(Map<String, dynamic> json) {
     if (json['drivers'] != null) {
-      return Race(
+      Race race = Race(
         id: json['id'],
         championship_id: json['championshipId'],
         name: json['name'],
@@ -30,6 +30,8 @@ class Race {
         date: DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(json['date']),
         finished: json['finished'],
       );
+      race.drivers.sort((a, b) => b.position - a.position);
+      return race;
     }
     return Race(
       id: json['id'],

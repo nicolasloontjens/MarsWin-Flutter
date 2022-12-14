@@ -210,22 +210,37 @@ class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
                                             itemBuilder: (context, index) {
                                               return Center(
                                                 child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 5),
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.5,
-                                                  child: Text(
-                                                    '${index + 1}: ${snapshot.data!.race!.drivers[index].name}',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 5),
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          '${index + 1}: ${snapshot.data!.race!.drivers[index].name}',
+                                                          style: TextStyle(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        Text(
+                                                          '${snapshot.data!.race!.drivers[index].laps} lap(s)',
+                                                          style: TextStyle(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )),
                                               );
                                             },
                                           ),

@@ -85,16 +85,29 @@ class _FinishedRaceDetailPageState extends State<FinishedRaceDetailPage> {
                           itemCount: snapshot.data!.drivers.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              child: Text(
-                                snapshot.data!.drivers[index].name,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Inter',
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            );
+                                child: Row(
+                              children: [
+                                Text(
+                                  snapshot.data!.drivers[index].name,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Inter',
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "${snapshot.data!.drivers[index].laps.toString()} lap(s)",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Inter',
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ));
                           },
                         ),
                       )
