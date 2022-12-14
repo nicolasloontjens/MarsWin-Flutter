@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:marswin/data/network/datafetcher.dart';
+import 'package:marswin/pages/generalElements.dart';
 
 class WalletOverview extends StatefulWidget {
   const WalletOverview({Key? key}) : super(key: key);
@@ -18,6 +19,24 @@ class _WalletOverviewState extends State<WalletOverview> {
   int showOverview = 0;
   Key _key = UniqueKey();
   TextEditingController _amountController = TextEditingController();
+
+  void showAddFunds() {
+    setState(() {
+      showOverview = 1;
+    });
+  }
+
+  void showOverviewFunds() {
+    setState(() {
+      showOverview = 0;
+    });
+  }
+
+  void showWithdrawFunds() {
+    setState(() {
+      showOverview = 2;
+    });
+  }
 
   @override
   void initState() {
@@ -57,41 +76,40 @@ class _WalletOverviewState extends State<WalletOverview> {
         );
         return;
       }
-    } else {
-      bool response = await Datafetcher.updateBalance(operation, inputBalance);
-      String msg = response ? "Balance updated" : "Could not update balance";
-      Color color = response ? Colors.greenAccent : Colors.redAccent;
-      showToast(
-        msg,
-        context: context,
-        position: StyledToastPosition.top,
-        animation: StyledToastAnimation.slideFromTopFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        alignment: Alignment.bottomCenter,
-        backgroundColor: color,
-        duration: Duration(seconds: 3),
-        shapeBorder: ShapeBorder.lerp(
-            Border(
-              top: BorderSide(color: Colors.black, width: 2.0),
-              left: BorderSide(color: Colors.black, width: 2.0),
-              right: BorderSide(color: Colors.black, width: 3.0),
-              bottom: BorderSide(color: Colors.black, width: 3.0),
-            ),
-            Border(
-              top: BorderSide(color: Colors.black, width: 2.0),
-              left: BorderSide(color: Colors.black, width: 2.0),
-              right: BorderSide(color: Colors.black, width: 3.0),
-              bottom: BorderSide(color: Colors.black, width: 3.0),
-            ),
-            0.5),
-      );
-      setState(() {
-        _amountController.clear();
-        _key = UniqueKey();
-        showOverview = 0;
-        balance = Datafetcher.getBalance();
-      });
     }
+    bool response = await Datafetcher.updateBalance(operation, inputBalance);
+    String msg = response ? "Balance updated" : "Could not update balance";
+    Color color = response ? Colors.greenAccent : Colors.redAccent;
+    showToast(
+      msg,
+      context: context,
+      position: StyledToastPosition.top,
+      animation: StyledToastAnimation.slideFromTopFade,
+      reverseAnimation: StyledToastAnimation.fade,
+      alignment: Alignment.bottomCenter,
+      backgroundColor: color,
+      duration: Duration(seconds: 3),
+      shapeBorder: ShapeBorder.lerp(
+          Border(
+            top: BorderSide(color: Colors.black, width: 2.0),
+            left: BorderSide(color: Colors.black, width: 2.0),
+            right: BorderSide(color: Colors.black, width: 3.0),
+            bottom: BorderSide(color: Colors.black, width: 3.0),
+          ),
+          Border(
+            top: BorderSide(color: Colors.black, width: 2.0),
+            left: BorderSide(color: Colors.black, width: 2.0),
+            right: BorderSide(color: Colors.black, width: 3.0),
+            bottom: BorderSide(color: Colors.black, width: 3.0),
+          ),
+          0.5),
+    );
+    setState(() {
+      _amountController.clear();
+      _key = UniqueKey();
+      showOverview = 0;
+      balance = Datafetcher.getBalance();
+    });
   }
 
   @override
@@ -135,86 +153,13 @@ class _WalletOverviewState extends State<WalletOverview> {
                               Container(
                                 child: Column(
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.only(top: 25),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            showOverview = 1;
-                                          });
-                                        },
-                                        child: Container(
-                                          height: 40,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.40,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xFFE87470),
-                                              border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black,
-                                                  blurRadius: 0,
-                                                  offset: Offset(1, 1),
-                                                )
-                                              ]),
-                                          child: Center(
-                                              child: Text(
-                                            'Add funds',
-                                            style: TextStyle(
-                                                fontFamily: "Inter",
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          )),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: 25),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            showOverview = 2;
-                                          });
-                                        },
-                                        child: Container(
-                                          height: 40,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.40,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xFFE87470),
-                                              border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black,
-                                                  blurRadius: 0,
-                                                  offset: Offset(1, 1),
-                                                )
-                                              ]),
-                                          child: Center(
-                                              child: Text(
-                                            'Withdraw funds',
-                                            style: TextStyle(
-                                                fontFamily: "Inter",
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          )),
-                                        ),
-                                      ),
-                                    ),
+                                    GeneralElements.getActionButton(
+                                        "Add funds", showAddFunds, context),
+                                    SizedBox(height: 20),
+                                    GeneralElements.getActionButton(
+                                        "Withdraw funds",
+                                        showWithdrawFunds,
+                                        context),
                                   ],
                                 ),
                               ),
@@ -256,82 +201,18 @@ class _WalletOverviewState extends State<WalletOverview> {
                                           hintText: 'Amount'),
                                     ),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 25),
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        await editBalance(false);
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.40,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xFFE87470),
-                                            border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black,
-                                                blurRadius: 0,
-                                                offset: Offset(1, 1),
-                                              )
-                                            ]),
-                                        child: Center(
-                                            child: Text(
-                                          'Add',
-                                          style: TextStyle(
-                                              fontFamily: "Inter",
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        )),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          showOverview = 0;
-                                        });
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black,
-                                                blurRadius: 0,
-                                                offset: Offset(1, 1),
-                                              )
-                                            ]),
-                                        child: Center(
-                                            child: Text(
-                                          'Cancel',
-                                          style: TextStyle(
-                                              fontFamily: "Inter",
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        )),
-                                      ),
-                                    ),
-                                  ),
+                                  SizedBox(height: 20),
+                                  GeneralElements.getActionButton("Add",
+                                      () async {
+                                    await editBalance(false);
+                                  }, context),
+                                  SizedBox(height: 20),
+                                  GeneralElements.getActionButton("Cancel",
+                                      () async {
+                                    setState(() {
+                                      showOverview = 0;
+                                    });
+                                  }, context, color: Colors.grey),
                                 ],
                               ))
                             ] else if (showOverview == 2) ...[
@@ -375,82 +256,18 @@ class _WalletOverviewState extends State<WalletOverview> {
                                           hintText: 'Amount'),
                                     ),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 25),
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        await editBalance(true);
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.40,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xFFE87470),
-                                            border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black,
-                                                blurRadius: 0,
-                                                offset: Offset(1, 1),
-                                              )
-                                            ]),
-                                        child: Center(
-                                            child: Text(
-                                          'Withdraw',
-                                          style: TextStyle(
-                                              fontFamily: "Inter",
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        )),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          showOverview = 0;
-                                        });
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black,
-                                                blurRadius: 0,
-                                                offset: Offset(1, 1),
-                                              )
-                                            ]),
-                                        child: Center(
-                                            child: Text(
-                                          'Cancel',
-                                          style: TextStyle(
-                                              fontFamily: "Inter",
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        )),
-                                      ),
-                                    ),
-                                  ),
+                                  SizedBox(height: 20),
+                                  GeneralElements.getActionButton("Withdraw",
+                                      () async {
+                                    await editBalance(true);
+                                  }, context),
+                                  SizedBox(height: 20),
+                                  GeneralElements.getActionButton("Cancel",
+                                      () async {
+                                    setState(() {
+                                      showOverview = 0;
+                                    });
+                                  }, context, color: Colors.grey),
                                 ],
                               ))
                             ]

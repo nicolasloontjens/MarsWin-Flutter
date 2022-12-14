@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marswin/data/network/datafetcher.dart';
 import 'package:marswin/data/network/types/User.dart';
+import 'package:marswin/pages/generalElements.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "../routing/route_generator.dart";
 import 'package:url_launcher/url_launcher.dart';
@@ -115,101 +116,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       )
                     ],
                   )),
-              Container(
-                padding: EdgeInsets.only(top: 40),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/bets');
-                  },
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * 0.40,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE87470),
-                        border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 0,
-                            offset: Offset(1, 1),
-                          )
-                        ]),
-                    child: Center(
-                        child: Text(
-                      'Bet history',
-                      style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16),
-                    )),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 25),
-                child: GestureDetector(
-                  onTap: () async {
-                    _logoutUser();
-                  },
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * 0.40,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE87470),
-                        border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 0,
-                            offset: Offset(1, 1),
-                          )
-                        ]),
-                    child: Center(
-                        child: Text(
-                      'Log out',
-                      style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16),
-                    )),
-                  ),
-                ),
-              ),
+              SizedBox(height: 20),
+              GeneralElements.getActionButton("Bet history", () {
+                Navigator.of(context).pushNamed('/bets');
+              }, context),
+              SizedBox(height: 20),
+              GeneralElements.getActionButton(
+                  "Get support", _launchSupportPage, context),
               Spacer(),
-              Container(
-                padding: EdgeInsets.only(bottom: 50),
-                child: GestureDetector(
-                  onTap: _launchSupportPage,
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * 0.40,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE87470),
-                        border: Border.all(color: Colors.black, width: 2.0),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 0,
-                            offset: Offset(1, 1),
-                          )
-                        ]),
-                    child: Center(
-                        child: Text(
-                      'Get support',
-                      style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16),
-                    )),
-                  ),
-                ),
-              ),
+              GeneralElements.getActionButton("Log out", () async {
+                _logoutUser();
+              }, context),
+              SizedBox(height: 40),
             ],
           ),
         ));

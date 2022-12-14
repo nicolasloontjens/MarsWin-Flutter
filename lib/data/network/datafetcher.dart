@@ -325,7 +325,6 @@ class Datafetcher {
         "Authorization": "Bearer " + await getToken()
       }).timeout(Duration(seconds: 5));
       if (betResponse.statusCode == 200 && driverResponse.statusCode == 200) {
-        debugPrint('both requests good!');
         List<dynamic> bets = jsonDecode(betResponse.body)
             .map((bet) => Bet.fromJson(bet))
             .toList();

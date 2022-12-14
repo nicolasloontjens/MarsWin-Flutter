@@ -291,7 +291,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                               fontSize: 22,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
-                                              fontFamily: 'Inter'),
+                                              fontFamily: 'InterSemiBold'),
                                         ),
                                         onTap: () {
                                           int id = snapshot.data![index].id;
@@ -374,7 +374,7 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                                               fontSize: 22,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
-                                              fontFamily: 'Inter'),
+                                              fontFamily: 'InterSemiBold'),
                                         ),
                                         subtitle: Text(
                                             DateFormat('yyyy-MM-dd – kk:mm')

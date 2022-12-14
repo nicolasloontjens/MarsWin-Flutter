@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +56,11 @@ class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
   void initState() {
     super.initState();
     liveRace = Datafetcher.getLiveRace();
+    Timer.periodic(
+        Duration(seconds: 10),
+        (Timer t) => setState(() {
+              liveRace = Datafetcher.getLiveRace();
+            }));
   }
 
   @override
