@@ -81,6 +81,9 @@ flutter:
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter/Inter-Regular.ttf
+    - family: InterSemiBold
+      fonts:
+        - asset: assets/fonts/Inter/Inter-SemiBold.ttf
     - family: Nasalization
       fonts:
         - asset: assets/fonts/Nasalization/nasalization.otf
