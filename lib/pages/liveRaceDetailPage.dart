@@ -1,6 +1,8 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:marswin/data/network/datafetcher.dart';
 import 'package:marswin/data/network/types/LiveRace.dart';
@@ -14,9 +16,39 @@ class liveRaceDetailPage extends StatefulWidget {
 }
 
 class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
+  final TextEditingController _amountController = TextEditingController();
   late Future<LiveRace> liveRace;
   final List<bool> isSelected = [true, false];
   bool vertical = false;
+  late int selectedValue = 1;
+
+  Future _placeBet(int driverId, int raceId, int amount) async {
+    var res = await Datafetcher.placeBet(driverId, raceId, amount);
+    showToast(
+      res ? "Bet placed!" : "Could not place bet",
+      context: context,
+      position: StyledToastPosition.top,
+      animation: StyledToastAnimation.slideFromTopFade,
+      reverseAnimation: StyledToastAnimation.fade,
+      alignment: Alignment.bottomCenter,
+      backgroundColor: res ? Colors.greenAccent : Colors.redAccent,
+      duration: Duration(seconds: 3),
+      shapeBorder: ShapeBorder.lerp(
+          Border(
+            top: BorderSide(color: Colors.black, width: 2.0),
+            left: BorderSide(color: Colors.black, width: 2.0),
+            right: BorderSide(color: Colors.black, width: 3.0),
+            bottom: BorderSide(color: Colors.black, width: 3.0),
+          ),
+          Border(
+            top: BorderSide(color: Colors.black, width: 2.0),
+            left: BorderSide(color: Colors.black, width: 2.0),
+            right: BorderSide(color: Colors.black, width: 3.0),
+            bottom: BorderSide(color: Colors.black, width: 3.0),
+          ),
+          0.5),
+    );
+  }
 
   @override
   void initState() {
@@ -146,12 +178,22 @@ class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
                                               0.7,
                                           padding: EdgeInsets.all(15),
                                           decoration: BoxDecoration(
-                                              border: Border.all(
+                                              boxShadow: [
+                                                BoxShadow(
                                                   color: Colors.black,
-                                                  width: 2,
-                                                  style: BorderStyle.solid),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8))),
+                                                  blurRadius: 0,
+                                                  spreadRadius: 3.5,
+                                                  offset: Offset(1, 1),
+                                                ),
+                                                BoxShadow(
+                                                  color: Color(0xFFE75657),
+                                                  blurRadius: 0,
+                                                  offset: Offset(0, 0),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Color(0xFFFFF9F3)),
                                           margin: EdgeInsets.only(top: 20),
                                           child: ListView.builder(
                                             scrollDirection: Axis.vertical,
@@ -189,16 +231,46 @@ class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
                                                 0.7,
                                             padding: EdgeInsets.all(15),
                                             decoration: BoxDecoration(
-                                                border: Border.all(
+                                                boxShadow: [
+                                                  BoxShadow(
                                                     color: Colors.black,
-                                                    width: 2,
-                                                    style: BorderStyle.solid),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(8))),
+                                                    blurRadius: 0,
+                                                    spreadRadius: 3.5,
+                                                    offset: Offset(1, 1),
+                                                  ),
+                                                  BoxShadow(
+                                                    color: Color(0xFFE75657),
+                                                    blurRadius: 0,
+                                                    offset: Offset(0, 0),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Color(0xFFFFF9F3)),
                                             margin: EdgeInsets.only(top: 20),
                                             child: Column(
                                               children: [
                                                 DropdownButton<int>(
+                                                    style: TextStyle(
+                                                        fontFamily: 'Inter',
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                    underline: Container(
+                                                      margin: EdgeInsets.only(
+                                                          top: 4),
+                                                      height: 1,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 2)),
+                                                    ),
+                                                    icon: Icon(
+                                                        CarbonIcons.person),
+                                                    hint: Text('Your driver'),
+                                                    dropdownColor:
+                                                        Color(0xFFf1ebe6),
                                                     items: snapshot
                                                         .data!.race!.drivers
                                                         .map((e) {
@@ -207,9 +279,96 @@ class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
                                                           value: e.id,
                                                           child: Text(e.name));
                                                     }).toList(),
-                                                    onChanged: (newValue) {})
+                                                    value: selectedValue,
+                                                    onChanged: (int? newValue) {
+                                                      setState(() {
+                                                        selectedValue =
+                                                            int.parse(newValue
+                                                                .toString());
+                                                      });
+                                                    }),
+                                                SizedBox(height: 20),
+                                                TextFormField(
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .digitsOnly
+                                                  ],
+                                                  validator: (value) {},
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  controller: _amountController,
+                                                  decoration: InputDecoration(
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.black,
+                                                            width: 2.0),
+                                                      ),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.black,
+                                                            width: 2.0),
+                                                      ),
+                                                      hintText: 'Amount'),
+                                                ),
+                                                SizedBox(height: 10),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    await _placeBet(
+                                                        selectedValue,
+                                                        snapshot.data!.race!.id,
+                                                        int.parse(
+                                                            _amountController
+                                                                .text));
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10,
+                                                            horizontal: 10),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 5),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.black,
+                                                            blurRadius: 0,
+                                                            spreadRadius: 3.5,
+                                                            offset:
+                                                                Offset(1, 1),
+                                                          ),
+                                                          BoxShadow(
+                                                            color: Color(
+                                                                0xFFE75657),
+                                                            blurRadius: 0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                          )
+                                                        ]),
+                                                    child: Text(
+                                                      'Place bet!',
+                                                      style: TextStyle(
+                                                          letterSpacing: 0.2,
+                                                          fontSize: 18,
+                                                          fontFamily:
+                                                              'Nasalization',
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                )
                                               ],
-                                            ))
+                                            )),
                                       ]
                                     ],
                                   ))
