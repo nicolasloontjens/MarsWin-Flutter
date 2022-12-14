@@ -22,7 +22,7 @@ class Race {
     if (json['drivers'] != null) {
       Race race = Race(
         id: json['id'],
-        championship_id: json['championshipId'],
+        championship_id: json['championship_id'],
         name: json['name'],
         drivers: List.from(json['drivers'])
             .map((model) => RaceDriver.fromJson(Map.from(model)))
@@ -35,7 +35,7 @@ class Race {
     }
     return Race(
       id: json['id'],
-      championship_id: json['championshipId'],
+      championship_id: json['championship_id'],
       name: json['name'],
       date: DateFormat('yyyy-MM-ddTHH:mm:ssZ').parse(json['date']),
       finished: json['finished'],
