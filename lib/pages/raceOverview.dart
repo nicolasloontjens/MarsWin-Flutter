@@ -57,6 +57,9 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                     if (snapshot.hasData) {
                       if (snapshot.data!.success) {
                         return Container(
+                          width: MediaQuery.of(context).size.width * 0.50,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(6),
@@ -75,8 +78,58 @@ class _RaceOverviewPageState extends State<RaceOverviewPage> {
                               ]),
                           child: Column(
                             children: [
-                              Text(""),
-                              GestureDetector(onTap: () {}, child: Container())
+                              Text(
+                                "Currently live!",
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xFFFF0000)),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                "${snapshot.data!.race!.name}",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed("/races/live");
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black,
+                                          blurRadius: 0,
+                                          spreadRadius: 3.5,
+                                          offset: Offset(1, 1),
+                                        ),
+                                        BoxShadow(
+                                          color: Color(0xFFE75657),
+                                          blurRadius: 0,
+                                          offset: Offset(0, 0),
+                                        )
+                                      ]),
+                                  child: Text(
+                                    'Check it out!',
+                                    style: TextStyle(
+                                        letterSpacing: 0.2,
+                                        fontSize: 18,
+                                        fontFamily: 'Baloo2',
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         );
