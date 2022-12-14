@@ -93,7 +93,14 @@ class _ErrorPageState extends State<ErrorPage> {
                         decoration: BoxDecoration(
                             color: Color(0xFFE87470),
                             border: Border.all(color: Colors.black, width: 2.0),
-                            borderRadius: BorderRadius.circular(5)),
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 0,
+                                offset: Offset(1, 1),
+                              )
+                            ]),
                         child: Center(
                             child: Text(
                           'Lets get back on track!',
