@@ -44,6 +44,8 @@ The app is split into 3 main parts:
 - The routing folder: contains a route generator which handles the routing of the application
 - The data folder: contains all the data models and datafetcher.dart which interacts with the MarsWin API.
 
+Videos showcasing the functionality of the application can be found <a href="https://git.ti.howest.be/TI/2022-2023/s5/trending-topics-sd/students/mars07/documentation/-/tree/main/assets/video">here</a>.
+
 ## Running locally:
 
 1. Install the flutter sdk (https://flutter.dev/docs/get-started/install)
