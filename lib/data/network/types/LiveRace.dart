@@ -15,7 +15,7 @@ class LiveRace {
   factory LiveRace.fromJson(Map<String, dynamic> json) {
     LiveRace race =
         LiveRace(json['id'], Race.fromJson(json['race']), json['url'], true);
-    race.race!.drivers.sort((a, b) => a.laps - b.laps);
+    race.race!.drivers.sort((a, b) => b.laps - a.laps);
     return race;
   }
 }
