@@ -54,6 +54,17 @@ The app is split into 3 main parts:
 Note:   
 When running the application with VS Code you might have to uncheck "Uncaught Exceptions" in the debug tab of VS Code. Otherwise the ui will block whilst running. This is since some packages that are used are throwing errors that can not be caught.
 
+## Releases:
+The project has been built for the following sources using <a href="https://codemagic.io/start/">codemagic.io</a>
+
+- Web
+- Linux
+- Windows
+- MacOS
+- Android
+- iOS
+
+You can find them <a href="https://github.com/nicolasloontjens/MarsWin-Flutter/releases/tag/'v1'">here</a>.
 
 ## Project deployment:
 
