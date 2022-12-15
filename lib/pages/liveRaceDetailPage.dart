@@ -182,7 +182,7 @@ class _liveRaceDetailPageState extends State<liveRaceDetailPage> {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.7,
+                                              0.9,
                                           padding: EdgeInsets.all(15),
                                           decoration: BoxDecoration(
                                               boxShadow: [

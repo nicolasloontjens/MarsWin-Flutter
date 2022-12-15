@@ -54,7 +54,7 @@ class _StandingsPageState extends State<StandingsPage> {
                                       fontFamily: 'InterSemiBold')),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
+                              width: MediaQuery.of(context).size.width * 0.85,
                               margin: EdgeInsets.symmetric(horizontal: 50),
                               child: ListView.builder(
                                 scrollDirection: Axis.vertical,
