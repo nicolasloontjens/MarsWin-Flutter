@@ -64,7 +64,7 @@ The project has been built for the following sources using <a href="https://code
 - Android
 - iOS
 
-You can find them <a href="https://github.com/nicolasloontjens/MarsWin-Flutter/releases/tag/'v1'">here</a>.
+You can find them <a href="https://github.com/nicolasloontjens/MarsWin-Flutter/releases/tag/'v1'">here</a> or in Gitlab under Deployments > Releases.
 
 ## Project deployment:
 
