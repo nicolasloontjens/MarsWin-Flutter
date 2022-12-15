@@ -8,7 +8,7 @@ A Flutter application for the MarsWin betting site.
 
 This app was built to interact with our MarsWin system. It uses the Flutter framework and is built for web currently.
 
-You can find a demo video of this application <a href="">here</a>.
+Videos showcasing the functionality of the application can be found <a href="https://git.ti.howest.be/TI/2022-2023/s5/trending-topics-sd/students/mars07/documentation/-/tree/main/assets/video">here</a>.
 
 ## Project requirements and dependencies:
 
@@ -43,8 +43,6 @@ The app is split into 3 main parts:
 - The pages folder: contains all the pages of the application
 - The routing folder: contains a route generator which handles the routing of the application
 - The data folder: contains all the data models and datafetcher.dart which interacts with the MarsWin API.
-
-Videos showcasing the functionality of the application can be found <a href="https://git.ti.howest.be/TI/2022-2023/s5/trending-topics-sd/students/mars07/documentation/-/tree/main/assets/video">here</a>.
 
 ## Running locally:
 
